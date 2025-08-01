@@ -1,11 +1,29 @@
 import { View, Text, TextInput, StyleSheet } from 'react-native'
 import { colors, typography } from '../../lib/theme'
 
-export default function Input({ label, placeholder, value, onChangeText }) {
+export default function Input({ 
+  label, 
+  placeholder, 
+  value, 
+  onChangeText, 
+  secureTextEntry = false,
+  autoComplete,
+  textContentType 
+}) {
   return (
     <View>
       <Text style={styles.label}>{label}</Text>
-      <TextInput style={styles.input} value={value} onChangeText={onChangeText} placeholder={placeholder} placeholderTextColor={colors.gray} />
+      <TextInput 
+        style={styles.input} 
+        value={value} 
+        onChangeText={onChangeText} 
+        placeholder={placeholder} 
+        placeholderTextColor={colors.gray}
+        autoCapitalize="none"
+        secureTextEntry={secureTextEntry}
+        autoComplete={autoComplete}
+        textContentType={textContentType}
+      />
     </View>
   )
 }
