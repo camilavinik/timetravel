@@ -1,12 +1,12 @@
 import { TouchableOpacity, Text, StyleSheet } from 'react-native'
 import { colors, typography } from '../../lib/theme'
 
-export default function Button({ title, onPress, loading, disabled, variant = 'container' }) {
+export default function Button({ title, onPress, loading, disabled, variant = 'container', style }) {
   const buttonStyle = variant === 'container' ? styles.buttonContained : styles.buttonOutlined
   const textStyle = variant === 'container' ? styles.textContained : styles.textOutlined
 
   return (
-    <TouchableOpacity style={buttonStyle} onPress={onPress} disabled={disabled || loading}>
+    <TouchableOpacity style={[buttonStyle, style]} onPress={onPress} disabled={disabled || loading}>
       <Text style={textStyle}>{title}</Text>
     </TouchableOpacity>
   )

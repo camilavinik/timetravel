@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
-import { Alert, StyleSheet, View, AppState } from 'react-native'
+import { Alert, View, AppState, StyleSheet, Image, Text } from 'react-native'
 import { supabase } from '../lib/supabase'
-import { Button, Input } from './common'
+import { Button, Input, Container } from './common'
+import { colors, typography } from '../lib/theme'
 
 // From Supabase docs:
 // Tells Supabase Auth to continuously refresh the session automatically if
@@ -43,8 +44,13 @@ export default function Auth() {
   }
 
   return (
-    <View style={styles.container}>
-      <View style={[styles.verticallySpaced, styles.mt20]}>
+    <Container>
+      <View style={styles.header}>
+        <Image source={require('../assets/icon.png')} style={styles.logo} />
+        <Text style={styles.welcomeTitle}>Welcome to Timetravel</Text>
+        <Text style={styles.welcomeSubtitle}>Sign in to continue your journey</Text>
+      </View>
+      <View style={styles.container}>
         <Input
           label="Email"
           leftIcon={{ type: 'font-awesome', name: 'envelope' }}
@@ -53,8 +59,6 @@ export default function Auth() {
           placeholder="email@address.com"
           autoCapitalize={'none'}
         />
-      </View>
-      <View style={styles.verticallySpaced}>
         <Input
           label="Password"
           leftIcon={{ type: 'font-awesome', name: 'lock' }}
@@ -64,28 +68,39 @@ export default function Auth() {
           placeholder="Password"
           autoCapitalize={'none'}
         />
+        <View style={styles.buttonGroup}>
+          <Button title="Sign in" disabled={loading} onPress={login} />
+          <Button variant="outlined" title="Sign up" disabled={loading} onPress={register} />
+        </View>
       </View>
-      <View style={[styles.verticallySpaced, styles.mt20]}>
-        <Button title="Sign in" disabled={loading} onPress={login} />
-      </View>
-      <View style={styles.verticallySpaced}>
-        <Button variant="outlined" title="Sign up" disabled={loading} onPress={register} />
-      </View>
-    </View>
+    </Container>
   )
 }
 
 const styles = StyleSheet.create({
+  header: {
+    alignItems: 'center',
+    marginBottom: 32,
+  },
+  logo: {
+    width: 80,
+    height: 80,
+    marginBottom: 16,
+  },
+  welcomeTitle: {
+    ...typography.title,
+    color: colors.dark,
+    marginBottom: 4,
+  },
+  welcomeSubtitle: {
+    ...typography.body,
+    color: colors.gray,
+  },
   container: {
-    marginTop: 40,
-    padding: 12,
+    gap: 16,
   },
-  verticallySpaced: {
-    paddingTop: 4,
-    paddingBottom: 4,
-    alignSelf: 'stretch',
-  },
-  mt20: {
-    marginTop: 20,
+  buttonGroup: {
+    gap: 16,
+    marginTop: 12,
   },
 })
