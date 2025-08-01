@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
 import { Alert, StyleSheet, View, AppState } from 'react-native'
 import { supabase } from '../lib/supabase'
-import { Input } from '@rneui/themed'
-import { Button } from './common'
+import { Button, Input } from './common'
 
 // From Supabase docs:
 // Tells Supabase Auth to continuously refresh the session automatically if
