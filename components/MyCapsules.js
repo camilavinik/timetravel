@@ -1,5 +1,5 @@
 import { SafeAreaView, Text, Alert, View } from 'react-native'
-import { Button } from '@rneui/themed'
+import { Button } from './common'
 import { supabase } from '../lib/supabase'
 
 export default function MyCapsules() {

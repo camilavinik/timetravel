@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import { Alert, StyleSheet, View, AppState } from 'react-native'
 import { supabase } from '../lib/supabase'
-import { Button, Input } from '@rneui/themed'
+import { Input } from '@rneui/themed'
+import { Button } from './common'
 
 // From Supabase docs:
 // Tells Supabase Auth to continuously refresh the session automatically if
@@ -71,7 +72,7 @@ export default function Auth() {
         <Button title="Sign in" disabled={loading} onPress={login} />
       </View>
       <View style={styles.verticallySpaced}>
-        <Button title="Sign up" disabled={loading} onPress={register} />
+        <Button variant="outlined" title="Sign up" disabled={loading} onPress={register} />
       </View>
     </View>
   )
