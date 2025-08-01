@@ -32,7 +32,6 @@ export default function Auth() {
   async function register() {
     setLoading(true)
     const {
-      data: { session },
       error,
     } = await supabase.auth.signUp({
       email: email,
@@ -40,7 +39,6 @@ export default function Auth() {
     })
 
     if (error) Alert.alert(error.message)
-    if (!session) Alert.alert('Please check your inbox for email verification!')
     setLoading(false)
   }
 
