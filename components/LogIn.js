@@ -1,43 +1,19 @@
 import React, { useState } from 'react'
-import { Alert, View, AppState, StyleSheet, Image, Text } from 'react-native'
+import { Alert, View, StyleSheet, Image, Text } from 'react-native'
 import { supabase } from '../lib/supabase'
 import { Button, Input, Container } from './common'
 import { colors, typography } from '../lib/theme'
+import { useNavigation } from '@react-navigation/native'
 
-// From Supabase docs:
-// Tells Supabase Auth to continuously refresh the session automatically if
-// the app is in the foreground. When this is added, you will continue to receive
-// `onAuthStateChange` events with the `TOKEN_REFRESHED` or `SIGNED_OUT` event
-// if the user's session is terminated. This should only be registered once.
-AppState.addEventListener('change', (state) => {
-  if (state === 'active') {
-    supabase.auth.startAutoRefresh()
-  } else {
-    supabase.auth.stopAutoRefresh()
-  }
-})
-
-export default function Auth() {
+export default function LogIn() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
+  const navigation = useNavigation()
 
   async function login() {
     setLoading(true)
     const { error } = await supabase.auth.signInWithPassword({ email, password })
-
-    if (error) Alert.alert(error.message)
-    setLoading(false)
-  }
-
-  async function register() {
-    setLoading(true)
-    const {
-      error,
-    } = await supabase.auth.signUp({
-      email: email,
-      password: password
-    })
 
     if (error) Alert.alert(error.message)
     setLoading(false)
@@ -70,7 +46,7 @@ export default function Auth() {
         />
         <View style={styles.buttonGroup}>
           <Button title="Sign in" disabled={loading} onPress={login} />
-          <Button variant="outlined" title="Sign up" disabled={loading} onPress={register} />
+          <Button variant="outlined" title="Sign up" disabled={loading} onPress={() => navigation.navigate('SignUp')} />
         </View>
       </View>
     </Container>

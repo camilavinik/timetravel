@@ -1,4 +1,5 @@
-import Auth from './Auth'
+import LogIn from './LogIn'
+import SignUp from './SignUp'
 import MyCapsules from './MyCapsules'
 
-export { Auth, MyCapsules }
+export { LogIn, MyCapsules, SignUp }

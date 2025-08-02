@@ -1,4 +1,4 @@
-import { SafeAreaView, Text, Alert, View } from 'react-native'
+import { SafeAreaView, Text, View } from 'react-native'
 import { Button } from './common'
 import { supabase } from '../lib/supabase'
 

@@ -8,13 +8,15 @@ export default function Input({
   onChangeText, 
   secureTextEntry = false,
   autoComplete,
-  textContentType 
+  textContentType,
+  style,
+  error,
 }) {
   return (
-    <View>
+    <View style={style}>
       <Text style={styles.label}>{label}</Text>
       <TextInput 
-        style={styles.input} 
+        style={[styles.input, error && styles.errorBorder]} 
         value={value} 
         onChangeText={onChangeText} 
         placeholder={placeholder} 
@@ -24,6 +26,7 @@ export default function Input({
         autoComplete={autoComplete}
         textContentType={textContentType}
       />
+      {error && <Text style={styles.error}>{error}</Text>}
     </View>
   )
 }
@@ -41,5 +44,15 @@ const styles = StyleSheet.create({
     borderColor: colors.gray,
     borderRadius: 6,
     padding: 10,
+  },
+  errorBorder: {
+    borderColor: colors.error,
+  },
+  error: {
+    position: 'absolute',
+    bottom: -15,
+    right: 0,
+    color: colors.error,
+    ...typography.error,
   },
 })
