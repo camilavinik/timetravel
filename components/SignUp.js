@@ -1,31 +1,20 @@
 import React, { useState } from 'react'
-import { Alert, View, StyleSheet, Image, Text } from 'react-native'
-import { supabase } from '../lib/supabase'
+import { View, StyleSheet, Image, Text } from 'react-native'
 import { Button, Input, Container } from './common'
 import { colors, typography } from '../lib/theme'
 import { useNavigation } from '@react-navigation/native'
+import { useAuth } from '../lib/useAuth'
 
-export default function LogIn() {
+export default function SignUp() {
   const [name, setName] = useState('')
   const [lastName, setLastName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
-  const [loading, setLoading] = useState(false)
   const navigation = useNavigation()
+  const { register, loading } = useAuth()
 
-  async function register() {
-    setLoading(true)
-    const {
-      error,
-    } = await supabase.auth.signUp({
-      email: email,
-      password: password
-    })
-
-    if (error) Alert.alert(error.message)
-    setLoading(false)
-  }
+  const handleRegister = () => register({ email, password, firstName: name, lastName })
 
   const disabled = loading || !name || !lastName || !email || !password || !confirmPassword || password !== confirmPassword
   
@@ -83,7 +72,7 @@ export default function LogIn() {
           error={confirmPassword && password !== confirmPassword ? 'Passwords do not match' : ''}
         />
         <View style={styles.buttonGroup}>
-          <Button title="Register" disabled={disabled} onPress={register} />
+          <Button title="Register" disabled={disabled} onPress={handleRegister} />
           <Button variant="ghost" title="Cancel" disabled={loading} onPress={() => navigation.goBack()} />
         </View>
       </View>

@@ -1,23 +1,17 @@
 import React, { useState } from 'react'
-import { Alert, View, StyleSheet, Image, Text } from 'react-native'
-import { supabase } from '../lib/supabase'
+import { View, StyleSheet, Image, Text } from 'react-native'
 import { Button, Input, Container } from './common'
 import { colors, typography } from '../lib/theme'
 import { useNavigation } from '@react-navigation/native'
+import { useAuth } from '../lib/useAuth'
 
 export default function LogIn() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [loading, setLoading] = useState(false)
   const navigation = useNavigation()
+  const { login, loading } = useAuth()
 
-  async function login() {
-    setLoading(true)
-    const { error } = await supabase.auth.signInWithPassword({ email, password })
-
-    if (error) Alert.alert(error.message)
-    setLoading(false)
-  }
+  const handleLogin = () => login({ email, password })
 
   return (
     <Container>
@@ -45,7 +39,7 @@ export default function LogIn() {
           autoCapitalize={'none'}
         />
         <View style={styles.buttonGroup}>
-          <Button title="Sign in" disabled={loading} onPress={login} />
+          <Button title="Sign in" disabled={loading} onPress={handleLogin} />
           <Button variant="outlined" title="Sign up" disabled={loading} onPress={() => navigation.navigate('SignUp')} />
         </View>
       </View>
