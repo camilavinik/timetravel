@@ -1,18 +1,17 @@
-import { SafeAreaView, Text, View } from 'react-native'
+import { SafeAreaView, Text } from 'react-native'
+import { useNavigation } from '@react-navigation/native'
 import { Button } from './common'
-import { supabase } from '../lib/supabase'
 
 export default function MyCapsules() {
+  const navigation = useNavigation()
 
   return (
     <SafeAreaView>
       <Text>My Capsules</Text>
-      <View>
-        <Button 
-          title="Logout" 
-          onPress={() => supabase.auth.signOut()}
-        />
-      </View>
-    </SafeAreaView> 
+      <Button
+        title="Settings"
+        onPress={() => navigation.navigate('Settings')}
+      />
+    </SafeAreaView>
   )
 }

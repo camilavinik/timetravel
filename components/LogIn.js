@@ -3,18 +3,18 @@ import { View, StyleSheet, Image, Text } from 'react-native'
 import { Button, Input, Container } from './common'
 import { colors, typography } from '../lib/theme'
 import { useNavigation } from '@react-navigation/native'
-import { useAuth } from '../lib/useAuth'
+import { useAuthContext } from '../lib/AuthContext'
 
 export default function LogIn() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const navigation = useNavigation()
-  const { login, loading } = useAuth()
+  const { login, loading } = useAuthContext()
 
   const handleLogin = () => login({ email, password })
 
   return (
-    <Container>
+    <Container centered>
       <View style={styles.header}>
         <Image source={require('../assets/icon.png')} style={styles.logo} />
         <Text style={styles.welcomeTitle}>Welcome to Timetravel</Text>

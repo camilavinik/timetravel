@@ -1,10 +1,10 @@
 import { View, StyleSheet, SafeAreaView } from 'react-native'
 import { colors } from '../../lib/theme'
 
-export default function Container({ children }) {
+export default function Container({ children, centered }) {
   return (
-    <SafeAreaView style={styles.safeArea}>
-      <View style={styles.wrapper}>
+    <SafeAreaView style={[styles.safeArea, centered && styles.flex1]}>
+      <View style={[styles.wrapper, centered && styles.flex1]}>
         <View style={styles.container}>{children}</View>
       </View>
     </SafeAreaView>
@@ -12,20 +12,18 @@ export default function Container({ children }) {
 }
 
 const styles = StyleSheet.create({
-  safeArea: {
+  flex1: {
     flex: 1,
   },
   wrapper: {
-    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 20,
+    paddingHorizontal: 20,
   },
   container: {
     padding: 20,
     borderRadius: 10,
     backgroundColor: colors.white,
     width: '100%',
-    maxWidth: 400, // Optional: limit max width on larger screens
   },
 })

@@ -3,7 +3,7 @@ import { View, StyleSheet, Image, Text } from 'react-native'
 import { Button, Input, Container } from './common'
 import { colors, typography } from '../lib/theme'
 import { useNavigation } from '@react-navigation/native'
-import { useAuth } from '../lib/useAuth'
+import { useAuthContext } from '../lib/AuthContext'
 
 export default function SignUp() {
   const [name, setName] = useState('')
@@ -12,14 +12,14 @@ export default function SignUp() {
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const navigation = useNavigation()
-  const { register, loading } = useAuth()
+  const { register, loading } = useAuthContext()
 
   const handleRegister = () => register({ email, password, firstName: name, lastName })
 
   const disabled = loading || !name || !lastName || !email || !password || !confirmPassword || password !== confirmPassword
-  
+
   return (
-    <Container>
+    <Container centered>
       <View style={styles.header}>
         <Image source={require('../assets/icon.png')} style={styles.logo} />
         <Text style={styles.title}>Sign up for Timetravel</Text>
@@ -50,7 +50,7 @@ export default function SignUp() {
           onChangeText={(text) => setEmail(text)}
           value={email}
           placeholder="email@address.com"
-          autoCapitalize={'none'}
+          autoCapitalize="none"
         />
         <Input
           label="Password"
