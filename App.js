@@ -3,6 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 import { LogIn, MyCapsules, SignUp, Settings } from './components'
 import { AuthProvider, useAuthContext } from './lib/AuthContext'
 import { useFonts, SpaceGrotesk_300Light, SpaceGrotesk_400Regular, SpaceGrotesk_500Medium, SpaceGrotesk_600SemiBold, SpaceGrotesk_700Bold } from '@expo-google-fonts/space-grotesk'
+import { Header } from './components/common'
 
 const Stack = createStackNavigator()
 
@@ -17,14 +18,16 @@ function AuthStack() {
 
 function AppStack() {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator screenOptions={{ header: (props) => <Header {...props} /> }}>
       <Stack.Screen
         name="MyCapsules"
         component={MyCapsules}
+        options={{ headerTitle: 'My Capsules', headerSubtitle: 'Manage your capsules' }}
       />
       <Stack.Screen
         name="Settings"
         component={Settings}
+        options={{ headerTitle: 'Settings', headerSubtitle: 'Manage your account' }}
       />
     </Stack.Navigator>
   )

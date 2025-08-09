@@ -1,4 +1,4 @@
-import { SafeAreaView, Text } from 'react-native'
+import { SafeAreaView } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { Button } from './common'
 
@@ -7,7 +7,6 @@ export default function MyCapsules() {
 
   return (
     <SafeAreaView>
-      <Text>My Capsules</Text>
       <Button
         title="Settings"
         onPress={() => navigation.navigate('Settings')}
