@@ -16,7 +16,7 @@ export const suggestedColors = [
 
 export default function ColorChooser({ color, setColor }) {
   return (
-    <>
+    <View style={styles.gap}>
       <Text style={typography.subtitle}>Choose Color</Text>
       <View style={styles.iconsContainer}>
         {suggestedColors.map((c, index) => (
@@ -25,11 +25,14 @@ export default function ColorChooser({ color, setColor }) {
           </TouchableOpacity>
         ))}
       </View>
-    </>
+    </View>
   )
 }
 
 const styles = StyleSheet.create({
+  gap: {
+    gap: 10,
+  },
   iconsContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',

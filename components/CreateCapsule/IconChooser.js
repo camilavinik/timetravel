@@ -30,7 +30,7 @@ export default function IconChooser({ icon, setIcon }) {
   }
 
   return (
-    <>
+    <View style={styles.gap}>
       <Text style={typography.subtitle}>Choose Icon</Text>
       <View style={styles.iconsContainer}>
         {suggestedIcons.map((i, index) => (
@@ -46,11 +46,14 @@ export default function IconChooser({ icon, setIcon }) {
         maxLength={1}
         inputStyle={styles.centeredInput}
       />
-    </>
+    </View>
   )
 }
 
 const styles = StyleSheet.create({
+  gap: {
+    gap: 10,
+  },
   iconsContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',

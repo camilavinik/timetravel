@@ -4,6 +4,7 @@ import { Container } from '../common'
 import { colors, typography } from '../../lib/theme'
 import IconChooser, { suggestedIcons } from './IconChooser'
 import ColorChooser, { suggestedColors } from './ColorChooser'
+import Input from '../common/Input'
 
 export default function CreateCapsule() {
   const [color, setColor] = useState(suggestedColors[0])
@@ -22,6 +23,10 @@ export default function CreateCapsule() {
           </View>
           <IconChooser icon={icon} setIcon={setIcon} />
           <ColorChooser color={color} setColor={setColor} />
+          <View style={styles.gap10}>
+            <Text style={typography.subtitle}>Capsule Name</Text>
+            <Input value={name} onChangeText={setName} />
+          </View>
         </View>
       </Container>
     </ScrollView>
@@ -34,8 +39,11 @@ const styles = StyleSheet.create({
     marginVertical: 20,
   },
   column: {
-    gap: 10,
+    gap: 20,
     paddingTop: 10,
+  },
+  gap10: {
+    gap: 10,
   },
   description: {
     ...typography.description,
