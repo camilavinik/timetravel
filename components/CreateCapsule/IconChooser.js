@@ -67,7 +67,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   selectedIcon: {
-    backgroundColor: colors.lightGray,
+    outlineWidth: 1,
+    outlineColor: colors.primary,
+    borderColor: colors.primary,
   },
   helperText: {
     ...typography.description,

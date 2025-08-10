@@ -3,14 +3,7 @@ import { Text, StyleSheet, ScrollView, View } from 'react-native'
 import { Container } from '../common'
 import { colors, typography } from '../../lib/theme'
 import IconChooser, { suggestedIcons } from './IconChooser'
-
-const suggestedColors = [
-  '#FFE182',
-  '#EBBABF',
-  '#345CA1',
-  '#88C59F',
-  '#AC2436',
-];
+import ColorChooser, { suggestedColors } from './ColorChooser'
 
 export default function CreateCapsule() {
   const [color, setColor] = useState(suggestedColors[0])
@@ -28,6 +21,7 @@ export default function CreateCapsule() {
             <Text style={typography.subtitle}>{icon}</Text>
           </View>
           <IconChooser icon={icon} setIcon={setIcon} />
+          <ColorChooser color={color} setColor={setColor} />
         </View>
       </Container>
     </ScrollView>
