@@ -13,12 +13,13 @@ export default function Input({
   style,
   inputStyle,
   error,
+  multiline = false,
 }) {
   return (
     <View style={style}>
       {label && <Text style={styles.label}>{label}</Text>}
       <TextInput
-        style={[styles.input, error && styles.errorBorder, inputStyle]}
+        style={[styles.input, error && styles.errorBorder, inputStyle, multiline && styles.multilineInput]}
         value={value}
         onChangeText={onChangeText}
         placeholder={placeholder}
@@ -28,6 +29,7 @@ export default function Input({
         autoComplete={autoComplete}
         textContentType={textContentType}
         maxLength={maxLength}
+        multiline={multiline}
       />
       {error && <Text style={styles.error}>{error}</Text>}
     </View>
@@ -47,6 +49,9 @@ const styles = StyleSheet.create({
     borderColor: colors.gray,
     borderRadius: 6,
     padding: 10,
+  },
+  multilineInput: {
+    height: 100,
   },
   errorBorder: {
     borderColor: colors.error,

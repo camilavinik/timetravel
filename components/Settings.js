@@ -98,7 +98,6 @@ const styles = StyleSheet.create({
   settingsContainer: {
     flex: 1,
     gap: 20,
-    paddingVertical: 20,
   },
   sectionTitle: {
     ...typography.subtitle,

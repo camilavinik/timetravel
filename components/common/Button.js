@@ -24,6 +24,9 @@ const styles = StyleSheet.create({
     borderWidth: 0,
     alignItems: 'center',
   },
+  small: {
+    padding: 2,
+  },
   textContained: {
     color: colors.white,
     ...typography.button,
@@ -51,9 +54,9 @@ const textVariants = {
   ghost: styles.textOutlined,
 }
 
-export default function Button({ title, onPress, loading, disabled, variant = 'contained', style }) {
+export default function Button({ title, onPress, loading, disabled, variant = 'contained', size = 'medium', style }) {
   return (
-    <TouchableOpacity style={[buttonVariants[variant], disabled && styles.disabled, style]} onPress={onPress} disabled={disabled || loading}>
+    <TouchableOpacity style={[buttonVariants[variant], disabled && styles.disabled, size === 'small' && styles.small, style]} onPress={onPress} disabled={disabled || loading}>
       <Text style={textVariants[variant]}>{title}</Text>
     </TouchableOpacity>
   )

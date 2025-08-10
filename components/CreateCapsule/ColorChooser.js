@@ -20,9 +20,7 @@ export default function ColorChooser({ color, setColor }) {
       <Text style={typography.subtitle}>Choose Color</Text>
       <View style={styles.iconsContainer}>
         {suggestedColors.map((c, index) => (
-          <TouchableOpacity style={[styles.colorbox, { backgroundColor: c }, c === color && styles.selectedColor]} key={index} onPress={() => setColor(c)}>
-            <View style={[styles.color, { backgroundColor: c }]} />
-          </TouchableOpacity>
+          <TouchableOpacity style={[styles.colorbox, { backgroundColor: c }, c === color && styles.selectedColor]} key={index} onPress={() => setColor(c)}/>
         ))}
       </View>
     </View>
