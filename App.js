@@ -22,7 +22,7 @@ function AppStack() {
       <Stack.Screen
         name="MyCapsules"
         component={MyCapsules}
-        options={{ headerTitle: 'My Capsules', headerSubtitle: 'Manage your capsules' }}
+        options={{ headerTitle: 'My Capsules', headerSubtitle: 'Manage your capsules', showSettingsGear: true }}
       />
       <Stack.Screen
         name="Settings"
