@@ -1,6 +1,6 @@
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
-import { LogIn, MyCapsules, SignUp, Settings } from './components'
+import { LogIn, MyCapsules, SignUp, Settings, CreateCapsule } from './components'
 import { AuthProvider, useAuthContext } from './lib/AuthContext'
 import { useFonts, SpaceGrotesk_300Light, SpaceGrotesk_400Regular, SpaceGrotesk_500Medium, SpaceGrotesk_600SemiBold, SpaceGrotesk_700Bold } from '@expo-google-fonts/space-grotesk'
 import { Header } from './components/common'
@@ -28,6 +28,11 @@ function AppStack() {
         name="Settings"
         component={Settings}
         options={{ headerTitle: 'Settings', headerSubtitle: 'Manage your account' }}
+      />
+      <Stack.Screen
+        name="CreateCapsule"
+        component={CreateCapsule}
+        options={{ headerTitle: 'Create Capsule', headerSubtitle: 'Create a new capsule' }}
       />
     </Stack.Navigator>
   )
