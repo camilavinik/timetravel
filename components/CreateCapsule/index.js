@@ -1,18 +1,22 @@
 import { useState } from 'react'
-import { Text, StyleSheet, ScrollView, View, TouchableOpacity } from 'react-native'
+import { Text, StyleSheet, ScrollView, View, TouchableOpacity, Alert } from 'react-native'
 import { Container } from '../common'
 import { colors, typography } from '../../lib/theme'
 import IconChooser, { suggestedIcons } from './IconChooser'
 import ColorChooser, { suggestedColors } from './ColorChooser'
-import { Input, Button } from '../common'
+import { Input, Button, MediaItem } from '../common'
 import { randomUUID } from 'expo-crypto'
 import { Ionicons } from '@expo/vector-icons'
+import * as ImagePicker from 'expo-image-picker'
+import * as FileSystem from 'expo-file-system'
+import * as VideoThumbnails from 'expo-video-thumbnails'
 
 export default function CreateCapsule() {
   const [color, setColor] = useState(suggestedColors[0])
   const [icon, setIcon] = useState(suggestedIcons[0])
   const [name, setName] = useState('')
   const [messages, setMessages] = useState([])
+  const [mediaItems, setMediaItems] = useState([])
 
   const addMessage = () => {
     setMessages([...messages, { id: randomUUID(), message: '' }])
@@ -24,6 +28,53 @@ export default function CreateCapsule() {
 
   const deleteMessage = (id) => {
     setMessages(messages.filter(m => m.id !== id))
+  }
+
+  const addMedia = async () => {
+    try {
+      // Request permission to access the media library
+      const libraryPermission = await ImagePicker.requestMediaLibraryPermissionsAsync()
+      if (!libraryPermission.granted) {
+        return
+      }
+
+      const result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ['images', 'videos'],
+        allowsMultipleSelection: true,
+        quality: 1,
+      })
+
+      // If the user cancels or no assets are selected, exit
+      if (result.canceled || !result.assets || result.assets.length === 0) return
+
+      // Add each asset to the media items array with the file info
+      result.assets.forEach(async (asset) => {
+        const fileInfo = await FileSystem.getInfoAsync(asset.uri)
+        const isVideo = asset.type && asset.type.includes('video')
+
+        let thumbnailUri = asset.uri
+        if (isVideo) {
+          const { uri } = await VideoThumbnails.getThumbnailAsync(asset.uri, { time: 1000 })
+          thumbnailUri = uri
+        }
+
+        setMediaItems((prev) => [
+          ...prev,
+          {
+            id: randomUUID(),
+            fileInfo,
+            asset,
+            thumbnailUri,
+          },
+        ])
+      })
+    } catch (error) {
+      Alert.alert('Error', 'Failed to add media.')
+    }
+  }
+
+  const removeMediaItem = (id) => {
+    setMediaItems((prev) => prev.filter((m) => m.id !== id))
   }
 
   return (
@@ -69,8 +120,21 @@ export default function CreateCapsule() {
 
         {/* Add Media */}
         <Container>
-          <Text style={typography.subtitle}>Add Media</Text>
-          <Text style={styles.description}>Upload photos, videos, or both.</Text>
+          <View style={styles.spaceBetween}>
+            <View>
+              <Text style={typography.subtitle}>Add Media</Text>
+              <Text style={styles.description}>Upload photos, videos, or both.</Text>
+            </View>
+            <Button title={<Ionicons name="add-outline" size={24} />} onPress={addMedia} size="small" />
+          </View>
+
+          {mediaItems.length > 0 && (
+            <View style={[styles.column, styles.gap10]}>
+              {mediaItems.map((item) => (
+                <MediaItem key={item.id} item={item} onRemove={() => removeMediaItem(item.id)} />
+              ))}
+            </View>
+          )}
         </Container>
 
         {/* Unlock Date */}
