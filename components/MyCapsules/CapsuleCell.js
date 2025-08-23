@@ -5,7 +5,7 @@ import { Ionicons } from '@expo/vector-icons'
 import ContentBadge from './ContentBadge'
 
 export default function CapsuleCell({ capsule }) {
-  const { title, color, emoji, unlockDate, imageCount, videoCount, messageCount } = capsule;
+  const { name, color, icon, unlockAt, imageCount, videoCount, messageCount } = capsule;
 
   return (
     <Cell
@@ -14,12 +14,12 @@ export default function CapsuleCell({ capsule }) {
       cellContentView={
         <View style={styles.cellContent}>
           <View style={[styles.capsuleEmojiContainer, { backgroundColor: color }]}>
-            <Text style={typography.subtitle}>{emoji}</Text>
+            <Text style={typography.subtitle}>{icon}</Text>
           </View>
           <View style={styles.spaceBetween}>
             <View>
-              <Text style={typography.subtitle}>{title}</Text>
-              <Text style={typography.label}>Unlocks {unlockDate}</Text>
+              <Text style={typography.subtitle}>{name}</Text>
+              <Text style={typography.label}>Unlocks {unlockAt}</Text>
             </View>
             <View style={styles.badgesContainer}>
               <ContentBadge count={imageCount} icon={<Ionicons name="image-outline" size={12} />} />
