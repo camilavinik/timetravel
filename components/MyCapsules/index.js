@@ -1,13 +1,14 @@
-import { SafeAreaView, StyleSheet, ScrollView, View } from 'react-native'
+import { SafeAreaView, StyleSheet, ScrollView, View, Text } from 'react-native'
 import { TableView } from 'react-native-tableview-simple';
 import { Input, Button, Loading } from '../common'
 import CapsuleCell from './CapsuleCell'
 import EmptyState from './EmptyState'
 import ErrorState from './ErrorState'
 import { useNavigation } from '@react-navigation/native'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { supabase } from '../../lib/supabase'
 import { useAuthContext } from '../../lib/AuthContext'
+import { typography } from '../../lib/theme'
 
 /**
  * Parse and sort capsules by unlock date
@@ -47,6 +48,15 @@ export default function MyCapsules() {
   const [capsules, setCapsules] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
+  const [searchQuery, setSearchQuery] = useState('')
+
+  const filteredCapsules = useMemo(() => {
+    if (capsules.length === 0) return [];
+
+    if (!searchQuery) return capsules;
+
+    return capsules.filter((capsule) => capsule.name.toLowerCase().includes(searchQuery.toLowerCase()))
+  }, [capsules, searchQuery])
 
   const handleGetCapsules = async () => {
     try {
@@ -80,21 +90,23 @@ export default function MyCapsules() {
 
   if (error) return <ErrorState error={error} onRetry={handleGetCapsules} />
 
+  if (capsules.length === 0) return <EmptyState />
+
   return (
     <SafeAreaView style={styles.container}>
-      {capsules.length === 0 ? <EmptyState /> : <>
-        <Input placeholder="Search capsule" style={styles.mh20} />
-        <ScrollView>
+      <Input placeholder="Search capsule" style={styles.mh20} value={searchQuery} onChangeText={setSearchQuery} />
+      <ScrollView>
+        {filteredCapsules.length > 0 ? <>
           <TableView style={styles.gap10}>
-            {capsules.map((capsule) => (
+            {filteredCapsules.map((capsule) => (
               <CapsuleCell key={capsule.id} capsule={capsule} />
             ))}
           </TableView>
-        </ScrollView>
-        <View style={styles.bottomButtonContainer}>
-          <Button title="Create Capsule" onPress={() => navigation.navigate('CreateCapsule')} />
-        </View>
-      </>}
+        </> : <Text style={styles.noCapsulesFound}>No capsules found with "{searchQuery}"</Text>}
+      </ScrollView>
+      <View style={styles.bottomButtonContainer}>
+        <Button title="Create Capsule" onPress={() => navigation.navigate('CreateCapsule')} />
+      </View>
     </SafeAreaView>
   )
 }
@@ -113,5 +125,10 @@ const styles = StyleSheet.create({
   bottomButtonContainer: {
     paddingHorizontal: 20,
     paddingBottom: 20,
+  },
+  noCapsulesFound: {
+    ...typography.body,
+    paddingHorizontal: 20,
+    marginBottom: 20,
   },
 })
