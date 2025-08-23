@@ -10,6 +10,7 @@ import { Ionicons } from '@expo/vector-icons'
 import * as ImagePicker from 'expo-image-picker'
 import * as FileSystem from 'expo-file-system'
 import * as VideoThumbnails from 'expo-video-thumbnails'
+import DateTimePicker from '@react-native-community/datetimepicker'
 
 export default function CreateCapsule() {
   const [color, setColor] = useState(suggestedColors[0])
@@ -17,6 +18,7 @@ export default function CreateCapsule() {
   const [name, setName] = useState('')
   const [messages, setMessages] = useState([])
   const [mediaItems, setMediaItems] = useState([])
+  const [date, setDate] = useState(new Date())
 
   const addMessage = () => {
     setMessages([...messages, { id: randomUUID(), message: '' }])
@@ -141,6 +143,18 @@ export default function CreateCapsule() {
         <Container>
           <Text style={typography.subtitle}>Unlock Date</Text>
           <Text style={styles.description}>When should this capsule open?</Text>
+          <DateTimePicker
+            value={date}
+            mode="date"
+            display="compact"
+            minimumDate={new Date()}
+            onChange={(_, selectedDate) => {
+              if (selectedDate) {
+                setDate(selectedDate)
+              }
+            }}
+            style={styles.datePicker}
+          />
         </Container>
       </View>
     </ScrollView>
@@ -187,5 +201,11 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 0,
     top: 0,
+  },
+  datePicker: {
+    width: '100%',
+    height: 120,
+    marginTop: 10,
+    marginLeft: -10,
   },
 })
