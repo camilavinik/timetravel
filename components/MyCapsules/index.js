@@ -36,14 +36,14 @@ const parseAndSortCapsules = (capsules) => {
     color: capsule.color,
     icon: capsule.icon,
     unlockAt: new Date(capsule.unlock_at).toLocaleDateString(),
+    createdAt: new Date(capsule.created_at).toLocaleDateString(),
     imageCount: 0, // TODO: Count from related tables when implemented
     videoCount: 0, // TODO: Count from related tables when implemented
     messageCount: 0, // TODO: Count from related tables when implemented
   }))
 }
 
-export default function MyCapsules() {
-  const navigation = useNavigation()
+export default function MyCapsules({ navigation }) {
   const { session } = useAuthContext()
   const [capsules, setCapsules] = useState([])
   const [loading, setLoading] = useState(true)
@@ -65,7 +65,7 @@ export default function MyCapsules() {
 
       const { data, error } = await supabase
         .from('capsules')
-        .select('id, name, color, icon, unlock_at')
+        .select('id, name, color, icon, unlock_at, created_at')
         .eq('user_id', session.user.id)
         .order('unlock_at')
 
@@ -99,7 +99,7 @@ export default function MyCapsules() {
         {filteredCapsules.length > 0 ? <>
           <TableView style={styles.gap10}>
             {filteredCapsules.map((capsule) => (
-              <CapsuleCell key={capsule.id} capsule={capsule} />
+              <CapsuleCell key={capsule.id} capsule={capsule} onPress={() => navigation.navigate('Capsule', { capsule })} />
             ))}
           </TableView>
         </> : <Text style={styles.noCapsulesFound}>No capsules found with "{searchQuery}"</Text>}

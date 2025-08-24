@@ -4,12 +4,14 @@ import { colors, typography } from '../../lib/theme'
 import { Ionicons } from '@expo/vector-icons'
 import ContentBadge from './ContentBadge'
 
-export default function CapsuleCell({ capsule }) {
+export default function CapsuleCell({ capsule, onPress }) {
   const { name, color, icon, unlockAt, imageCount, videoCount, messageCount } = capsule;
 
   return (
     <Cell
+      onPress={onPress}
       backgroundColor='transparent'
+      highlightUnderlayColor='transparent'
       contentContainerStyle={styles.cellContentContainer}
       cellContentView={
         <View style={styles.cellContent}>
