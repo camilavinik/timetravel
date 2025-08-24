@@ -11,18 +11,18 @@ import * as ImagePicker from 'expo-image-picker'
 import * as FileSystem from 'expo-file-system'
 import * as VideoThumbnails from 'expo-video-thumbnails'
 import DateTimePicker from '@react-native-community/datetimepicker'
-import { supabase } from '../../lib/supabase'
 import { useAuthContext } from '../../lib/AuthContext'
+import useCapsules from '../../lib/useCapsules'
 
 export default function CreateCapsule({ navigation }) {
   const { session } = useAuthContext()
+  const { createCapsule, isCreatingCapsule } = useCapsules({ session })
   const [color, setColor] = useState(suggestedColors[0])
   const [icon, setIcon] = useState(suggestedIcons[0])
   const [name, setName] = useState('')
   const [messages, setMessages] = useState([])
   const [mediaItems, setMediaItems] = useState([])
   const [date, setDate] = useState(new Date())
-  const [isCreating, setIsCreating] = useState(false)
 
   const addMessage = () => {
     setMessages([...messages, { id: randomUUID(), message: '' }])
@@ -83,33 +83,9 @@ export default function CreateCapsule({ navigation }) {
     setMediaItems((prev) => prev.filter((m) => m.id !== id))
   }
 
-  const createCapsule = async () => {
-    try {
-      setIsCreating(true)
-      // Insert capsule into Supabase
-      const { error } = await supabase
-        .from('capsules')
-        .insert([{
-          name: name.trim(),
-          icon,
-          color,
-          unlock_at: date.toISOString(),
-          user_id: session.user.id,
-        }])
-        .select()
-        .single()
-
-      if (error) throw error;
-
-      // Redirct to home page (MyCapsules)
-      navigation.navigate('MyCapsules')
-
-    } catch (error) {
-      console.error('Error creating capsule:', error)
-      Alert.alert('Error', error.message || 'Failed to create capsule')
-    } finally {
-      setIsCreating(false)
-    }
+  const handleCreateCapsule = async () => {
+    await createCapsule({ name, icon, color, date, mediaItems });
+    navigation.navigate('MyCapsules');
   }
 
   return (
@@ -193,9 +169,13 @@ export default function CreateCapsule({ navigation }) {
         {/* Create Button */}
         <Container>
           <Button
-            title={isCreating ? 'Creating Capsule...' : 'Create Capsule'}
-            onPress={createCapsule}
-            disabled={isCreating || name.trim() === '' || icon === '' || color === ''}
+            title={
+              isCreatingCapsule 
+                ? 'Creating Capsule...'
+                : 'Create Capsule'
+            }
+            onPress={handleCreateCapsule}
+            disabled={isCreatingCapsule || name.trim() === '' || icon === '' || color === ''}
           />
         </Container>
       </View>

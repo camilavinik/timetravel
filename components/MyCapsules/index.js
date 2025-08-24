@@ -30,17 +30,19 @@ const parseAndSortCapsules = (capsules) => {
     if (!isFutureA && isFutureB) return 1;
 
     return unlockAtA - unlockAtB;
-  }).map(capsule => ({
-    id: capsule.id,
-    name: capsule.name,
-    color: capsule.color,
-    icon: capsule.icon,
-    unlockAt: new Date(capsule.unlock_at).toLocaleDateString(),
-    createdAt: new Date(capsule.created_at).toLocaleDateString(),
-    imageCount: 0, // TODO: Count from related tables when implemented
-    videoCount: 0, // TODO: Count from related tables when implemented
-    messageCount: 0, // TODO: Count from related tables when implemented
-  }))
+  }).map(capsule => {
+    return {
+      id: capsule.id,
+      name: capsule.name,
+      color: capsule.color,
+      icon: capsule.icon,
+      unlockAt: new Date(capsule.unlock_at).toLocaleDateString(),
+      createdAt: new Date(capsule.created_at).toLocaleDateString(),
+      imageCount: capsule.capsule_media?.filter(media => media.type === 'image').length || 0,
+      videoCount: capsule.capsule_media?.filter(media => media.type === 'video').length || 0,
+      messageCount: 0, // TODO: Count from related tables when implemented
+    }
+  })
 }
 
 export default function MyCapsules({ navigation }) {
@@ -65,7 +67,15 @@ export default function MyCapsules({ navigation }) {
 
       const { data, error } = await supabase
         .from('capsules')
-        .select('id, name, color, icon, unlock_at, created_at')
+        .select(`
+          id, 
+          name, 
+          color, 
+          icon, 
+          unlock_at, 
+          created_at,
+          capsule_media(type)
+        `)
         .eq('user_id', session.user.id)
         .order('unlock_at')
 
