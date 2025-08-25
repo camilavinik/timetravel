@@ -84,8 +84,8 @@ export default function CreateCapsule({ navigation }) {
   }
 
   const handleCreateCapsule = async () => {
-    await createCapsule({ name, icon, color, date, mediaItems });
-    navigation.navigate('MyCapsules');
+    await createCapsule({ name, icon, color, date, mediaItems, messages });
+    navigation.goBack();
   }
 
   return (
@@ -170,7 +170,7 @@ export default function CreateCapsule({ navigation }) {
         <Container>
           <Button
             title={
-              isCreatingCapsule 
+              isCreatingCapsule
                 ? 'Creating Capsule...'
                 : 'Create Capsule'
             }

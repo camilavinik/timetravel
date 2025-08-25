@@ -4,8 +4,8 @@ import { Input, Button, Loading } from '../common'
 import CapsuleCell from './CapsuleCell'
 import EmptyState from './EmptyState'
 import ErrorState from './ErrorState'
-import { useNavigation } from '@react-navigation/native'
-import { useState, useEffect, useMemo } from 'react'
+import { useFocusEffect } from '@react-navigation/native'
+import { useState, useMemo, useCallback } from 'react'
 import { supabase } from '../../lib/supabase'
 import { useAuthContext } from '../../lib/AuthContext'
 import { typography } from '../../lib/theme'
@@ -40,7 +40,7 @@ const parseAndSortCapsules = (capsules) => {
       createdAt: new Date(capsule.created_at).toLocaleDateString(),
       imageCount: capsule.capsule_media?.filter(media => media.type === 'image').length || 0,
       videoCount: capsule.capsule_media?.filter(media => media.type === 'video').length || 0,
-      messageCount: 0, // TODO: Count from related tables when implemented
+      messageCount: capsule.messages?.length || 0
     }
   })
 }
@@ -60,7 +60,7 @@ export default function MyCapsules({ navigation }) {
     return capsules.filter((capsule) => capsule.name.toLowerCase().includes(searchQuery.toLowerCase()))
   }, [capsules, searchQuery])
 
-  const handleGetCapsules = async () => {
+  const handleGetCapsules = useCallback(async () => {
     try {
       setLoading(true)
       setError(null)
@@ -74,7 +74,8 @@ export default function MyCapsules({ navigation }) {
           icon, 
           unlock_at, 
           created_at,
-          capsule_media(type)
+          capsule_media(type),
+          messages(id)
         `)
         .eq('user_id', session.user.id)
         .order('unlock_at')
@@ -89,12 +90,14 @@ export default function MyCapsules({ navigation }) {
     } finally {
       setLoading(false)
     }
-  }
-
-  // Load capsules when component mounts
-  useEffect(() => {
-    handleGetCapsules()
   }, [session])
+
+  // Refresh capsules when screen comes into focus (including initial mount)
+  useFocusEffect(
+    useCallback(() => {
+      handleGetCapsules();
+    }, [handleGetCapsules])
+  )
 
   if (loading) return <Loading />
 
