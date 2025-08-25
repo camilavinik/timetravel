@@ -5,7 +5,7 @@ import { Ionicons } from '@expo/vector-icons'
 import ContentBadge from './ContentBadge'
 
 export default function CapsuleCell({ capsule, onPress }) {
-  const { name, color, icon, unlockAt, imageCount, videoCount, messageCount } = capsule;
+  const { name, color, icon, unlockAt, imageCount, videoCount, messageCount, unlocked, daysLeftCount } = capsule;
 
   return (
     <Cell
@@ -21,7 +21,10 @@ export default function CapsuleCell({ capsule, onPress }) {
           <View style={styles.spaceBetween}>
             <View>
               <Text style={typography.subtitle}>{name}</Text>
-              <Text style={typography.label}>Unlocks {unlockAt}</Text>
+              <View style={styles.badgesContainer}>
+                <Text style={typography.label}>{unlocked ? 'Unlocked on' : 'Locked until'} {unlockAt}</Text>
+                {!unlocked && <Text style={styles.daysLeft}>{daysLeftCount === 1 ? 'TOMORROW' : `${daysLeftCount} DAYS`}</Text>}
+              </View>
             </View>
             <View style={styles.badgesContainer}>
               <ContentBadge count={imageCount} icon={<Ionicons name="image-outline" size={12} />} />
@@ -63,5 +66,14 @@ const styles = StyleSheet.create({
   badgesContainer: {
     flexDirection: 'row',
     gap: 5,
+    alignItems: 'center',
+  },
+  daysLeft: {
+    ...typography.badgeSmall,
+    paddingHorizontal: 6,
+    paddingVertical: 2,
+    backgroundColor: colors.primary,
+    borderRadius: 10,
+    color: colors.white,
   },
 })
