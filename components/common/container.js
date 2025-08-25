@@ -1,5 +1,5 @@
 import { View, StyleSheet, SafeAreaView } from 'react-native'
-import { colors } from '../../lib/theme'
+import { colors, margins } from '../../lib/theme'
 
 export default function Container({ children, centered, color }) {
   return (
@@ -18,11 +18,11 @@ const styles = StyleSheet.create({
   wrapper: {
     justifyContent: 'center',
     alignItems: 'center',
-    paddingHorizontal: 20,
+    paddingHorizontal: margins.md,
   },
   container: {
-    padding: 20,
-    borderRadius: 10,
+    padding: margins.md,
+    borderRadius: margins.sm,
     backgroundColor: colors.white,
     width: '100%',
   },

@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
-import { colors, typography } from '../../lib/theme'
+import { colors, margins, typography, rsz } from '../../lib/theme'
 import { Ionicons } from '@expo/vector-icons'
 
 // Helper function to format file size
@@ -52,19 +52,19 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     backgroundColor: colors.lightGray,
-    padding: 10,
-    paddingRight: 20,
-    borderRadius: 10,
+    padding: margins.sm,
+    paddingRight: margins.md,
+    borderRadius: margins.sm,
   },
   row: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 10,
+    gap: margins.sm,
   },
   previewBox: {
-    width: 50,
-    height: 50,
-    borderRadius: 5,
+    width: rsz(50),
+    height: rsz(50),
+    borderRadius: margins.xs,
     overflow: 'hidden',
   },
   previewImage: {
@@ -87,8 +87,8 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
     backgroundColor: colors.lightGray2,
     color: colors.secondary,
-    paddingHorizontal: 5,
-    paddingVertical: 2,
-    borderRadius: 5,
+    paddingHorizontal: margins.xs,
+    paddingVertical: margins.xxs,
+    borderRadius: margins.xs,
   },
 })

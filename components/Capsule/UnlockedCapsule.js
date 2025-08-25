@@ -1,7 +1,7 @@
 import { useState, useCallback, useEffect } from 'react'
 import { View, Text, ScrollView, StyleSheet, Linking } from 'react-native'
 import { Container, Loading, ErrorState, MediaItem } from '../common'
-import { typography, colors } from '../../lib/theme'
+import { typography, colors, margins } from '../../lib/theme'
 import useCapsules from '../../lib/useCapsules'
 import { useAuthContext } from '../../lib/AuthContext'
 
@@ -72,28 +72,28 @@ export default function UnlockedCapsule({ capsule }) {
 
 const styles = StyleSheet.create({
   container: {
-    marginBottom: 20,
+    marginBottom: margins.md,
     flexDirection: 'column',
-    gap: 20,
+    gap: margins.md,
   },
   col10: {
     flex: 1,
     flexDirection: 'column',
-    gap: 10,
+    gap: margins.sm,
   },
   messageContainer: {
     backgroundColor: colors.lightGray,
-    padding: 10,
-    borderRadius: 10,
+    padding: margins.sm,
+    borderRadius: margins.sm,
   },
   row: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 20,
+    gap: margins.md,
   },
   icon: {
     ...typography.title,
     color: colors.white,
-    paddingHorizontal: 10,
+    paddingHorizontal: margins.sm,
   },
 })

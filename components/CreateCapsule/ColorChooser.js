@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
-import { colors, typography } from '../../lib/theme'
+import { colors, typography, rsz, margins } from '../../lib/theme'
 
 export const suggestedColors = [
   '#FFFAA0',
@@ -29,20 +29,20 @@ export default function ColorChooser({ color, setColor }) {
 
 const styles = StyleSheet.create({
   gap: {
-    gap: 10,
+    gap: margins.sm,
   },
   iconsContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    gap: 10,
+    gap: margins.sm,
     justifyContent: 'center',
   },
   colorbox: {
     borderWidth: 1,
     borderColor: colors.gray,
-    width: 50,
-    height: 50,
-    borderRadius: 10,
+    width: rsz(50),
+    height: rsz(50),
+    borderRadius: margins.sm,
     justifyContent: 'center',
     alignItems: 'center',
   },

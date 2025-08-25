@@ -1,5 +1,5 @@
 import { View, Text, TextInput, StyleSheet } from 'react-native'
-import { colors, typography } from '../../lib/theme'
+import { colors, typography, margins, rsz } from '../../lib/theme'
 
 export default function Input({
   label,
@@ -40,25 +40,25 @@ const styles = StyleSheet.create({
   label: {
     ...typography.inputLabel,
     color: colors.dark,
-    marginBottom: 4,
+    marginBottom: margins.xs,
   },
   input: {
     ...typography.body,
     color: colors.dark,
     borderWidth: 1,
     borderColor: colors.gray,
-    borderRadius: 6,
-    padding: 10,
+    borderRadius: margins.xs,
+    padding: margins.sm,
   },
   multilineInput: {
-    height: 100,
+    height: rsz(100),
   },
   errorBorder: {
     borderColor: colors.error,
   },
   error: {
     position: 'absolute',
-    bottom: -15,
+    bottom: rsz(-15),
     right: 0,
     color: colors.error,
     ...typography.error,

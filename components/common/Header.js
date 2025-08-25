@@ -1,6 +1,6 @@
 import React from 'react'
 import { SafeAreaView, View, Text, TouchableOpacity, StyleSheet } from 'react-native'
-import { colors, typography } from '../../lib/theme'
+import { colors, typography, margins } from '../../lib/theme'
 import { Ionicons } from '@expo/vector-icons'
 
 export default function Header({ navigation, options, back }) {
@@ -37,13 +37,13 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 20,
+    gap: margins.md,
   },
   spaceBetween: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: 20,
-    paddingBottom: 20,
+    paddingHorizontal: margins.md,
+    paddingBottom: margins.md,
     justifyContent: 'space-between',
   },
   title: {

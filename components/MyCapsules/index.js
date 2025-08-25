@@ -6,7 +6,7 @@ import EmptyState from './EmptyState'
 import { useFocusEffect } from '@react-navigation/native'
 import { useState, useMemo, useCallback } from 'react'
 import { useAuthContext } from '../../lib/AuthContext'
-import { typography, colors } from '../../lib/theme'
+import { typography, colors, margins } from '../../lib/theme'
 import useCapsules from '../../lib/useCapsules'
 
 export default function MyCapsules({ navigation }) {
@@ -89,22 +89,22 @@ export default function MyCapsules({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    gap: 20,
+    gap: margins.md,
   },
   gap10: {
-    gap: 10,
+    gap: margins.sm,
   },
   filtersContainer: {
-    marginTop: 20,
+    marginTop: margins.sm,
     flexDirection: 'row',
-    gap: 10,
+    gap: margins.sm,
   },
   filter: {
     ...typography.label,
     backgroundColor: colors.lightGray2,
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-    borderRadius: 10,
+    paddingHorizontal: margins.sm,
+    paddingVertical: margins.xxs,
+    borderRadius: margins.sm,
   },
   selectedFilter: {
     backgroundColor: colors.primary,
@@ -112,12 +112,12 @@ const styles = StyleSheet.create({
     ...typography.labelBold,
   },
   bottomButtonContainer: {
-    paddingHorizontal: 20,
-    paddingBottom: 20,
+    paddingHorizontal: margins.md,
+    paddingBottom: margins.md,
   },
   noCapsulesFound: {
     ...typography.body,
-    paddingHorizontal: 20,
-    marginBottom: 20,
+    paddingHorizontal: margins.md,
+    marginBottom: margins.md,
   },
 })

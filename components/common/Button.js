@@ -1,31 +1,31 @@
 import { TouchableOpacity, Text, StyleSheet } from 'react-native'
-import { colors, typography } from '../../lib/theme'
+import { colors, typography, margins } from '../../lib/theme'
 
 const styles = StyleSheet.create({
   buttonContained: {
-    padding: 10,
+    padding: margins.sm,
     backgroundColor: colors.primary,
-    borderWidth: 2,
+    borderWidth: margins.xxs,
     borderColor: colors.primary,
-    borderRadius: 6,
+    borderRadius: margins.xs,
     alignItems: 'center',
   },
   buttonOutlined: {
-    padding: 10,
+    padding: margins.sm,
     backgroundColor: 'transparent',
-    borderWidth: 2,
+    borderWidth: margins.xxs,
     borderColor: colors.primary,
-    borderRadius: 6,
+    borderRadius: margins.xs,
     alignItems: 'center',
   },
   buttonGhost: {
-    padding: 10,
+    padding: margins.sm,
     backgroundColor: 'transparent',
     borderWidth: 0,
     alignItems: 'center',
   },
   small: {
-    padding: 2,
+    padding: margins.xxs,
   },
   textContained: {
     color: colors.white,

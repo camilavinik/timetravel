@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet } from 'react-native'
-import { colors, typography } from '../../lib/theme'
+import { colors, typography, margins } from '../../lib/theme'
 import { Button } from '../common'
 import { useNavigation } from '@react-navigation/native'
 import { Container } from '../common'
@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
   body: {
     ...typography.body,
     color: colors.gray,
-    marginBottom: 20,
+    marginBottom: margins.md,
   },
   button: {
     width: '100%',

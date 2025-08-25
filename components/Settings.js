@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { SafeAreaView, Text, View, StyleSheet } from 'react-native'
 import { Button, Container, Input } from './common'
 import { useAuthContext } from '../lib/AuthContext'
-import { typography } from '../lib/theme'
+import { typography, margins } from '../lib/theme'
 
 export default function Settings() {
   const { profile, logout, changePassword } = useAuthContext()
@@ -98,16 +98,16 @@ const styles = StyleSheet.create({
   },
   settingsContainer: {
     flex: 1,
-    gap: 20,
+    gap: margins.md,
   },
   sectionTitle: {
     ...typography.subtitle,
-    marginBottom: 14,
+    marginBottom: margins.md,
   },
   input: {
-    marginBottom: 18,
+    marginBottom: margins.md,
   },
   updateButton: {
-    marginTop: 8,
+    marginTop: margins.sm,
   },
 })

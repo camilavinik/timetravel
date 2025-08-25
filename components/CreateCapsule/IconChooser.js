@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
-import { colors, typography } from '../../lib/theme'
+import { colors, typography, rsz, margins } from '../../lib/theme'
 import Input from '../common/Input'
 
 export const suggestedIcons = [
@@ -52,20 +52,20 @@ export default function IconChooser({ icon, setIcon }) {
 
 const styles = StyleSheet.create({
   gap: {
-    gap: 10,
+    gap: margins.sm,
   },
   iconsContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    gap: 10,
+    gap: margins.sm,
     justifyContent: 'center',
   },
   icon: {
     borderWidth: 1,
     borderColor: colors.gray,
-    width: 50,
-    height: 50,
-    borderRadius: 10,
+    width: rsz(50),
+    height: rsz(50),
+    borderRadius: margins.sm,
     justifyContent: 'center',
     alignItems: 'center',
   },

@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native'
 import { Cell } from 'react-native-tableview-simple'
-import { colors, typography } from '../../lib/theme'
+import { colors, typography, margins, rsz } from '../../lib/theme'
 import { Ionicons } from '@expo/vector-icons'
 import ContentBadge from './ContentBadge'
 
@@ -42,38 +42,38 @@ const styles = StyleSheet.create({
   cellContentContainer: {
     paddingLeft: 0,
     paddingRight: 0,
-    marginHorizontal: 20
+    marginHorizontal: margins.md,
   },
   cellContent: {
     backgroundColor: colors.white,
     flex: 1,
     flexDirection: 'row',
-    gap: 10,
+    gap: margins.sm,
     alignItems: 'stretch',
-    padding: 10,
-    borderRadius: 10,
+    padding: margins.sm,
+    borderRadius: margins.sm,
   },
   spaceBetween: {
     justifyContent: 'space-between',
   },
   capsuleEmojiContainer: {
-    width: 70,
-    height: 70,
-    borderRadius: 5,
+    width: rsz(70),
+    height: rsz(70),
+    borderRadius: margins.sm,
     justifyContent: 'center',
     alignItems: 'center',
   },
   badgesContainer: {
     flexDirection: 'row',
-    gap: 5,
+    gap: margins.xs,
     alignItems: 'center',
   },
   daysLeft: {
     ...typography.badgeSmall,
-    paddingHorizontal: 6,
-    paddingVertical: 2,
+    paddingHorizontal: margins.xs,
+    paddingVertical: margins.xxs,
     backgroundColor: colors.primary,
-    borderRadius: 10,
+    borderRadius: margins.xs,
     color: colors.white,
   },
 })

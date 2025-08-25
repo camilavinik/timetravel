@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Text, StyleSheet, ScrollView, View, TouchableOpacity, Alert } from 'react-native'
 import { Container } from '../common'
-import { colors, typography } from '../../lib/theme'
+import { colors, typography, margins, rsz } from '../../lib/theme'
 import IconChooser, { suggestedIcons } from './IconChooser'
 import ColorChooser, { suggestedColors } from './ColorChooser'
 import { Input, Button, MediaItem } from '../common'
@@ -192,16 +192,16 @@ export default function CreateCapsule({ navigation }) {
 
 const styles = StyleSheet.create({
   container: {
-    marginBottom: 20,
+    marginBottom: margins.md,
     flexDirection: 'column',
-    gap: 20,
+    gap: margins.md,
   },
   column: {
-    gap: 20,
-    paddingTop: 10,
+    gap: margins.md,
+    paddingTop: margins.sm,
   },
   gap10: {
-    gap: 10,
+    gap: margins.sm,
   },
   relative: {
     position: 'relative',
@@ -210,7 +210,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    gap: 20,
+    gap: margins.md,
   },
   description: {
     ...typography.description,
@@ -218,13 +218,13 @@ const styles = StyleSheet.create({
   },
   iconContainer: {
     marginHorizontal: 'auto',
-    width: 70,
-    height: 70,
-    borderRadius: 10,
+    width: rsz(70),
+    height: rsz(70),
+    borderRadius: margins.sm,
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'row',
-    gap: 10,
+    gap: margins.sm,
   },
   messageDeleteIcon: {
     position: 'absolute',
@@ -233,8 +233,8 @@ const styles = StyleSheet.create({
   },
   datePicker: {
     width: '100%',
-    height: 120,
-    marginTop: 10,
-    marginLeft: -10,
+    height: rsz(120),
+    marginTop: margins.sm,
+    marginLeft: rsz(-10),
   },
 })

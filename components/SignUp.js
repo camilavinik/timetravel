@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { View, StyleSheet, Image, Text } from 'react-native'
 import { Button, Input, Container } from './common'
-import { colors, typography } from '../lib/theme'
+import { colors, typography, rsz, margins } from '../lib/theme'
 import { useNavigation } from '@react-navigation/native'
 import { useAuthContext } from '../lib/AuthContext'
 
@@ -83,32 +83,32 @@ export default function SignUp() {
 const styles = StyleSheet.create({
   header: {
     alignItems: 'center',
-    marginBottom: 32,
+    marginBottom: margins.lg,
   },
   logo: {
-    width: 80,
-    height: 80,
-    marginBottom: 16,
+    width: rsz(80),
+    height: rsz(80),
+    marginBottom: margins.md,
   },
   title: {
     ...typography.title,
     color: colors.dark,
-    marginBottom: 4,
+    marginBottom: margins.xs,
   },
   subtitle: {
     ...typography.body,
     color: colors.gray,
   },
   container: {
-    gap: 16,
+    gap: margins.md,
   },
   buttonGroup: {
-    gap: 16,
-    marginTop: 12,
+    gap: margins.sm,
+    marginTop: margins.sm,
   },
   rowInputs: {
     flexDirection: 'row',
-    gap: 16,
+    gap: margins.md,
   },
   flex1: {
     flex: 1,

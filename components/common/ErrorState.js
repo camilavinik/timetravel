@@ -1,7 +1,6 @@
 import { View, Text, StyleSheet } from 'react-native'
-import { colors, typography } from '../../lib/theme'
-import { Button } from '.'
-import { Container } from '.'
+import { colors, typography, margins } from '../../lib/theme'
+import { Button, Container } from '.'
 
 export default function ErrorState({ error, onRetry }) {
   return (
@@ -23,7 +22,7 @@ const styles = StyleSheet.create({
   body: {
     ...typography.body,
     color: colors.gray,
-    marginBottom: 20,
+    marginBottom: margins.md,
   },
   button: {
     width: '100%',
