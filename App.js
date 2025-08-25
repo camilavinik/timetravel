@@ -27,7 +27,7 @@ function AppStack() {
       <Stack.Screen
         name="Capsule"
         component={Capsule}
-        options={{ headerTitle: 'Capsule', headerSubtitle: 'View capsule' }}
+        options={{ headerTitle: 'Capsule', headerSubtitle: 'View capsule details' }}
       />
       <Stack.Screen
         name="Settings"
