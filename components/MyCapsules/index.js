@@ -1,6 +1,6 @@
 import { SafeAreaView, StyleSheet, ScrollView, View, Text, TouchableOpacity } from 'react-native'
 import { TableView } from 'react-native-tableview-simple';
-import { Input, Button, Loading, ErrorState } from '../common'
+import { Input, Button, Loading, ErrorState, Container } from '../common'
 import CapsuleCell from './CapsuleCell'
 import EmptyState from './EmptyState'
 import { useFocusEffect } from '@react-navigation/native'
@@ -60,8 +60,8 @@ export default function MyCapsules({ navigation }) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View>
-        <Input placeholder="Search capsule" style={styles.mh20} value={searchQuery} onChangeText={setSearchQuery} />
+      <Container>
+        <Input placeholder="Search capsule" value={searchQuery} onChangeText={setSearchQuery} />
         <View style={styles.filtersContainer}>
           {filters.map((filter) => (
             <TouchableOpacity key={filter} onPress={() => setSelectedFilter(filter)}>
@@ -69,7 +69,7 @@ export default function MyCapsules({ navigation }) {
             </TouchableOpacity>
           ))}
         </View>
-      </View>
+      </Container>
       <ScrollView>
         {filteredCapsules.length > 0 ?
           <TableView style={styles.gap10}>
@@ -94,14 +94,10 @@ const styles = StyleSheet.create({
   gap10: {
     gap: 10,
   },
-  mh20: {
-    marginHorizontal: 20,
-  },
   filtersContainer: {
-    marginTop: 10,
+    marginTop: 20,
     flexDirection: 'row',
     gap: 10,
-    paddingHorizontal: 20,
   },
   filter: {
     ...typography.label,

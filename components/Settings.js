@@ -80,12 +80,13 @@ export default function Settings() {
         </Container>
       </View>
 
-      <Button
-        variant="outlined"
-        style={styles.button}
-        title="Logout"
-        onPress={logout}
-      />
+      <Container>
+        <Button
+          variant="outlined"
+          title="Logout"
+          onPress={logout}
+        />
+      </Container>
     </SafeAreaView>
   )
 }
@@ -108,8 +109,5 @@ const styles = StyleSheet.create({
   },
   updateButton: {
     marginTop: 8,
-  },
-  button: {
-    margin: 20,
   },
 })
