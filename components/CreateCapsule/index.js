@@ -142,7 +142,14 @@ export default function CreateCapsule({ navigation }) {
           {mediaItems.length > 0 && (
             <View style={[styles.column, styles.gap10]}>
               {mediaItems.map((item) => (
-                <MediaItem key={item.id} item={item} onRemove={() => removeMediaItem(item.id)} />
+                <MediaItem key={item.id}
+                  size={item.fileInfo.size}
+                  format={item.asset.uri.split('.').pop().toUpperCase()}
+                  duration={item.asset.duration}
+                  isVideo={item.asset.type.includes('video')}
+                  thumbnailUri={item.thumbnailUri}
+                  onRemove={() => removeMediaItem(item.id)}
+                />
               ))}
             </View>
           )}

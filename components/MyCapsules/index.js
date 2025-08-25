@@ -1,55 +1,18 @@
 import { SafeAreaView, StyleSheet, ScrollView, View, Text } from 'react-native'
 import { TableView } from 'react-native-tableview-simple';
-import { Input, Button, Loading } from '../common'
+import { Input, Button, Loading, ErrorState } from '../common'
 import CapsuleCell from './CapsuleCell'
 import EmptyState from './EmptyState'
-import ErrorState from './ErrorState'
 import { useFocusEffect } from '@react-navigation/native'
 import { useState, useMemo, useCallback } from 'react'
-import { supabase } from '../../lib/supabase'
 import { useAuthContext } from '../../lib/AuthContext'
 import { typography } from '../../lib/theme'
-
-/**
- * Parse and sort capsules by unlock date
- * Future dates first, then past dates, both ascending
- * @param {Array} capsules - Array of capsules
- * @returns {Array} - Array of parsed and sorted capsules
- */
-const parseAndSortCapsules = (capsules) => {
-  const now = new Date()
-
-  return capsules.sort((a, b) => {
-    const unlockAtA = new Date(a.unlock_at);
-    const unlockAtB = new Date(b.unlock_at);
-
-    const isFutureA = unlockAtA > now;
-    const isFutureB = unlockAtB > now;
-
-    if (isFutureA && !isFutureB) return -1;
-    if (!isFutureA && isFutureB) return 1;
-
-    return unlockAtA - unlockAtB;
-  }).map(capsule => {
-    return {
-      id: capsule.id,
-      name: capsule.name,
-      color: capsule.color,
-      icon: capsule.icon,
-      unlockAt: new Date(capsule.unlock_at).toLocaleDateString(),
-      createdAt: new Date(capsule.created_at).toLocaleDateString(),
-      imageCount: capsule.capsule_media?.filter(media => media.type === 'image').length || 0,
-      videoCount: capsule.capsule_media?.filter(media => media.type === 'video').length || 0,
-      messageCount: capsule.messages?.length || 0
-    }
-  })
-}
+import useCapsules from '../../lib/useCapsules'
 
 export default function MyCapsules({ navigation }) {
   const { session } = useAuthContext()
+  const { getCapsules, getCapsulesLoading, getCapsulesError } = useCapsules({ session })
   const [capsules, setCapsules] = useState([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(null)
   const [searchQuery, setSearchQuery] = useState('')
 
   const filteredCapsules = useMemo(() => {
@@ -61,47 +24,20 @@ export default function MyCapsules({ navigation }) {
   }, [capsules, searchQuery])
 
   const handleGetCapsules = useCallback(async () => {
-    try {
-      setLoading(true)
-      setError(null)
-
-      const { data, error } = await supabase
-        .from('capsules')
-        .select(`
-          id, 
-          name, 
-          color, 
-          icon, 
-          unlock_at, 
-          created_at,
-          capsule_media(type),
-          messages(id)
-        `)
-        .eq('user_id', session.user.id)
-        .order('unlock_at')
-
-      if (error) throw error
-
-      const parsedCapsules = parseAndSortCapsules(data)
-      setCapsules(parsedCapsules)
-    } catch (error) {
-      console.error('Error fetching capsules:', error)
-      setError(error.message)
-    } finally {
-      setLoading(false)
-    }
-  }, [session])
+    const capsules = await getCapsules()
+    setCapsules(capsules)
+  }, [getCapsules])
 
   // Refresh capsules when screen comes into focus (including initial mount)
   useFocusEffect(
     useCallback(() => {
-      handleGetCapsules();
+      handleGetCapsules()
     }, [handleGetCapsules])
   )
 
-  if (loading) return <Loading />
+  if (getCapsulesLoading) return <Loading />
 
-  if (error) return <ErrorState error={error} onRetry={handleGetCapsules} />
+  if (getCapsulesError) return <ErrorState error={getCapsulesError} onRetry={handleGetCapsules} />
 
   if (capsules.length === 0) return <EmptyState />
 

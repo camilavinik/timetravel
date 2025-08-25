@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet } from 'react-native'
 import { colors, typography } from '../../lib/theme'
-import { Button } from '../common'
-import { Container } from '../common'
+import { Button } from '.'
+import { Container } from '.'
 
 export default function ErrorState({ error, onRetry }) {
   return (

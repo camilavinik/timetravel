@@ -1,5 +1,6 @@
-import { View, Text, StyleSheet, Image } from 'react-native'
+import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
 import { colors, typography } from '../../lib/theme'
+import { Ionicons } from '@expo/vector-icons'
 
 // Helper function to format file size
 // https://stackoverflow.com/questions/10420352/converting-file-size-in-bytes-to-human-readable-string
@@ -17,37 +18,43 @@ function humanDuration(duration) {
   return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`
 }
 
-export default function MediaItem({ item, onRemove }) {
-  const { asset, fileInfo, thumbnailUri } = item
-  const isVideo = asset.type.includes('video')
-  const format = asset.uri.split('.').pop().toUpperCase()
-  const duration = asset.duration
-
+export default function MediaItem({ size, thumbnailUri, format, duration, isVideo, onRemove, onDownload }) {
   return (
     <View style={styles.container}>
-      <View style={styles.previewBox}>
-        <Image source={{ uri: thumbnailUri }} style={styles.previewImage} resizeMode="cover" />
-      </View>
-      <View>
-        <View style={styles.row}>
-          <Text style={styles.type}>{asset.type}</Text>
-          <Text>{format}</Text>
+      <View style={styles.row}>
+        <View style={styles.previewBox}>
+          {thumbnailUri ? <Image source={{ uri: thumbnailUri }} style={styles.previewImage} resizeMode="cover" />
+            : <View style={styles.mediaTypeBox}>
+              <Ionicons name={isVideo ? 'film-outline' : 'image-outline'} size={24} color={colors.gray} />
+            </View>}
         </View>
-        <Text style={typography.label}>{humanFileSize(fileInfo.size)} {isVideo && ` •  ${humanDuration(duration)}`}</Text>
+        <View>
+          <View style={styles.row}>
+            <Text style={styles.type}>{isVideo ? 'Video' : 'Image'}</Text>
+            <Text style={styles.formatLabel}>{format}</Text>
+          </View>
+          <Text style={typography.label}>{humanFileSize(size)} {isVideo && ` •  ${humanDuration(duration)}`}</Text>
+        </View>
       </View>
-      {/* TODO: Add remove button */}
+      {onRemove && <TouchableOpacity onPress={onRemove}>
+        <Ionicons name="close-circle-outline" size={20} />
+      </TouchableOpacity>}
+      {onDownload && <TouchableOpacity onPress={onDownload}>
+        <Ionicons name="download-outline" size={20} />
+      </TouchableOpacity>}
     </View>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     backgroundColor: colors.lightGray,
     padding: 10,
+    paddingRight: 20,
     borderRadius: 10,
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 10,
   },
   row: {
     flexDirection: 'row',
@@ -67,5 +74,21 @@ const styles = StyleSheet.create({
   type: {
     ...typography.body,
     textTransform: 'capitalize',
+  },
+  mediaTypeBox: {
+    width: '100%',
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: colors.lightGray2,
+  },
+  formatLabel: {
+    ...typography.label,
+    textTransform: 'uppercase',
+    backgroundColor: colors.lightGray2,
+    color: colors.secondary,
+    paddingHorizontal: 5,
+    paddingVertical: 2,
+    borderRadius: 5,
   },
 })

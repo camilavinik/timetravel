@@ -4,5 +4,6 @@ import Container from './Container'
 import Header from './Header'
 import MediaItem from './MediaItem'
 import Loading from './Loading'
+import ErrorState from './ErrorState'
 
-export { Button, Input, Container, Header, MediaItem, Loading }
+export { Button, Input, Container, Header, MediaItem, Loading, ErrorState }

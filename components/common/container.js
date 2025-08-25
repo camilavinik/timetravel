@@ -1,11 +1,11 @@
 import { View, StyleSheet, SafeAreaView } from 'react-native'
 import { colors } from '../../lib/theme'
 
-export default function Container({ children, centered }) {
+export default function Container({ children, centered, color }) {
   return (
     <SafeAreaView style={[styles.safeArea, centered && styles.flex1]}>
       <View style={[styles.wrapper, centered && styles.flex1]}>
-        <View style={styles.container}>{children}</View>
+        <View style={[styles.container, { backgroundColor: color || colors.white }]}>{children}</View>
       </View>
     </SafeAreaView>
   )
