@@ -182,7 +182,7 @@ export default function CreateCapsule({ navigation }) {
                 : 'Create Capsule'
             }
             onPress={handleCreateCapsule}
-            disabled={isCreatingCapsule || name.trim() === '' || icon === '' || color === ''}
+            disabled={isCreatingCapsule || name.trim() === '' || icon === '' || color === '' || (mediaItems.length === 0 && messages.length === 0)}
           />
         </Container>
       </View>
