@@ -77,7 +77,7 @@ export default function MyCapsules({ navigation }) {
               <CapsuleCell key={capsule.id} capsule={capsule} onPress={() => navigation.navigate('Capsule', { capsule })} />
             ))}
           </TableView>
-          : <Text style={styles.noCapsulesFound}>No capsules found with "{searchQuery}"</Text>}
+          : <Text style={styles.noCapsulesFound}>No capsules found{searchQuery ? ` with "${searchQuery}"` : ''}</Text>}
       </ScrollView>
       <View style={styles.bottomButtonContainer}>
         <Button title="Create Capsule" onPress={() => navigation.navigate('CreateCapsule')} />
