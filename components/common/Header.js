@@ -1,5 +1,5 @@
 import React from 'react'
-import { SafeAreaView, View, Text, TouchableOpacity, StyleSheet } from 'react-native'
+import { SafeAreaView, View, Text, TouchableOpacity, StyleSheet, Platform, StatusBar } from 'react-native'
 import { colors, typography, margins } from '../../lib/theme'
 import { Ionicons } from '@expo/vector-icons'
 
@@ -7,7 +7,7 @@ export default function Header({ navigation, options, back }) {
   const { headerTitle, headerSubtitle, showSettingsGear } = options;
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.safeArea}>
       <View style={styles.spaceBetween}>
         <View style={styles.container}>
           {back && (
@@ -34,6 +34,9 @@ export default function Header({ navigation, options, back }) {
 }
 
 const styles = StyleSheet.create({
+  safeArea: {
+    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight + margins.sm : 0,
+  },
   container: {
     flexDirection: 'row',
     alignItems: 'center',

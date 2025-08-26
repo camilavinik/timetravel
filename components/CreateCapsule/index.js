@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Text, StyleSheet, ScrollView, View, TouchableOpacity, Alert } from 'react-native'
+import { Text, StyleSheet, ScrollView, View, TouchableOpacity, Alert, Platform } from 'react-native'
 import { Container } from '../common'
 import { colors, typography, margins, rsz } from '../../lib/theme'
 import IconChooser, { suggestedIcons } from './IconChooser'
@@ -23,6 +23,7 @@ export default function CreateCapsule({ navigation }) {
   const [messages, setMessages] = useState([])
   const [mediaItems, setMediaItems] = useState([])
   const [date, setDate] = useState(new Date())
+  const [showDatePicker, setShowDatePicker] = useState(false)
 
   const addMessage = () => {
     setMessages([...messages, { id: randomUUID(), message: '' }])
@@ -159,18 +160,48 @@ export default function CreateCapsule({ navigation }) {
         <Container>
           <Text style={typography.subtitle}>Unlock Date</Text>
           <Text style={styles.description}>When should this capsule open?</Text>
-          <DateTimePicker
-            value={date}
-            mode="date"
-            display="compact"
-            minimumDate={new Date()}
-            onChange={(_, selectedDate) => {
-              if (selectedDate) {
-                setDate(selectedDate)
-              }
-            }}
-            style={styles.datePicker}
-          />
+
+          {Platform.OS === 'android' ? (
+            <View>
+              <TouchableOpacity
+                onPress={() => setShowDatePicker(true)}
+                style={styles.dateButton}
+              >
+                <Text style={styles.dateButtonText}>
+                  {date.toLocaleDateString()}
+                </Text>
+                <Ionicons name="calendar-outline" size={20} color={colors.dark} />
+              </TouchableOpacity>
+
+              {showDatePicker && (
+                <DateTimePicker
+                  value={date}
+                  mode="date"
+                  display="default"
+                  minimumDate={new Date()}
+                  onChange={(_, selectedDate) => {
+                    setShowDatePicker(false)
+                    if (selectedDate) {
+                      setDate(selectedDate)
+                    }
+                  }}
+                />
+              )}
+            </View>
+          ) : (
+            <DateTimePicker
+              value={date}
+              mode="date"
+              display="compact"
+              minimumDate={new Date()}
+              onChange={(_, selectedDate) => {
+                if (selectedDate) {
+                  setDate(selectedDate)
+                }
+              }}
+              style={styles.datePicker}
+            />
+          )}
         </Container>
 
         {/* Create Button */}
@@ -236,5 +267,18 @@ const styles = StyleSheet.create({
     height: rsz(120),
     marginTop: margins.sm,
     marginLeft: rsz(-10),
+  },
+  dateButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    backgroundColor: colors.lightGray,
+    padding: margins.md,
+    borderRadius: margins.sm,
+    marginTop: margins.sm,
+  },
+  dateButtonText: {
+    ...typography.body,
+    color: colors.dark,
   },
 })
