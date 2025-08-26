@@ -42,7 +42,7 @@ export default function CreateCapsule({ navigation }) {
       // Request permission to access the media library
       const libraryPermission = await ImagePicker.requestMediaLibraryPermissionsAsync()
       if (!libraryPermission.granted) {
-        return
+        return Alert.alert('Error', 'Please grant permission to access the media library.')
       }
 
       const result = await ImagePicker.launchImageLibraryAsync({
