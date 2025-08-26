@@ -8,7 +8,7 @@ export default function ErrorState({ error, onRetry }) {
       <View style={styles.containerContent}>
         <Text style={typography.subtitle}>Oops! Something went wrong.</Text>
         <Text style={styles.body}>{error}</Text>
-        <Button title="Try Again" style={styles.button} onPress={onRetry} />
+        {onRetry && <Button title="Try Again" style={styles.button} onPress={onRetry} />}
       </View>
     </Container>
   )
@@ -22,9 +22,9 @@ const styles = StyleSheet.create({
   body: {
     ...typography.body,
     color: colors.gray,
-    marginBottom: margins.md,
   },
   button: {
+    marginTop: margins.md,
     width: '100%',
   },
 })

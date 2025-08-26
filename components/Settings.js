@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 
 import { SafeAreaView, Text, View, StyleSheet } from 'react-native'
-import { Button, Container, Input } from './common'
+import { Button, Container, Input, ErrorState } from './common'
 import { useAuthContext } from '../lib/AuthContext'
 import { typography, margins } from '../lib/theme'
 
-export default function Settings() {
+export default function Settings({ navigation }) {
   const { profile, logout, changePassword } = useAuthContext()
 
   const [currentPassword, setCurrentPassword] = useState('')
@@ -27,15 +27,20 @@ export default function Settings() {
     }
   }
 
-  if (!profile) return null; // TODO: add error messages
+  if (!profile) return <ErrorState error="Error loading profile" />;
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.settingsContainer}>
         <Container>
-          <Text>{profile.first_name} {profile.last_name}</Text>
-          <Text>{profile.email}</Text>
-          <Text>{profile.created_at}</Text>
+          <Text style={typography.title}>{profile.first_name} {profile.last_name}</Text>
+          <Text style={typography.description}>{profile.email}</Text>
+          <Text style={typography.description}>
+            {new Date(profile.created_at).toLocaleDateString('en-US', {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric'
+            })}</Text>
         </Container>
         <Container>
           <Text style={styles.sectionTitle}>Change Password</Text>
