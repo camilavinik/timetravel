@@ -1,5 +1,6 @@
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
+import { KeyboardAvoidingView, Platform } from 'react-native'
 import { LogIn, MyCapsules, SignUp, Settings, CreateCapsule, Capsule } from './components'
 import { AuthProvider, useAuthContext } from './lib/AuthContext'
 import { useFonts, SpaceGrotesk_300Light, SpaceGrotesk_400Regular, SpaceGrotesk_500Medium, SpaceGrotesk_600SemiBold, SpaceGrotesk_700Bold } from '@expo-google-fonts/space-grotesk'
@@ -61,9 +62,15 @@ function AppContent() {
   }
 
   return (
-    <NavigationContainer>
-      {session && session.user ? <AppStack /> : <AuthStack />}
-    </NavigationContainer>
+    <KeyboardAvoidingView 
+      style={{ flex: 1 }}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20}
+    >
+      <NavigationContainer>
+        {session && session.user ? <AppStack /> : <AuthStack />}
+      </NavigationContainer>
+    </KeyboardAvoidingView>
   )
 }
 

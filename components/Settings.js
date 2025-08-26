@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-import { SafeAreaView, Text, View, StyleSheet } from 'react-native'
+import { SafeAreaView, Text, View, StyleSheet, ScrollView } from 'react-native'
 import { Button, Container, Input, ErrorState } from './common'
 import { useAuthContext } from '../lib/AuthContext'
 import { typography, margins } from '../lib/theme'
@@ -31,67 +31,69 @@ export default function Settings({ navigation }) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.settingsContainer}>
-        <Container>
-          <Text style={typography.title}>{profile.first_name} {profile.last_name}</Text>
-          <Text style={typography.description}>{profile.email}</Text>
-          <Text style={typography.description}>
-            {new Date(profile.created_at).toLocaleDateString('en-US', {
-              year: 'numeric',
-              month: 'long',
-              day: 'numeric'
-            })}</Text>
-        </Container>
-        <Container>
-          <Text style={styles.sectionTitle}>Change Password</Text>
-          <Input
-            label="Current password"
-            placeholder="Enter current password"
-            value={currentPassword}
-            onChangeText={setCurrentPassword}
-            secureTextEntry
-            autoComplete="password"
-            textContentType="password"
-            style={styles.input}
-          />
-          <Input
-            label="New password"
-            placeholder="Enter new password"
-            value={newPassword}
-            onChangeText={setNewPassword}
-            secureTextEntry
-            autoComplete="password-new"
-            textContentType="newPassword"
-            style={styles.input}
-          />
-          <Input
-            label="Confirm new password"
-            placeholder="Confirm new password"
-            value={confirmPassword}
-            onChangeText={setConfirmPassword}
-            secureTextEntry
-            autoComplete="password-new"
-            textContentType="newPassword"
-            style={styles.input}
-            error={confirmPassword && newPassword !== confirmPassword && 'Passwords do not match'}
-          />
-          <Button
-            title="Update password"
-            loading={isSubmitting}
-            onPress={handleChangePassword}
-            disabled={isSubmitting || (confirmPassword && newPassword !== confirmPassword)}
-            style={styles.updateButton}
-          />
-        </Container>
-      </View>
+      <ScrollView contentContainerStyle={styles.scrollContent}>
+        <View style={styles.settingsContainer}>
+          <Container>
+            <Text style={typography.title}>{profile.first_name} {profile.last_name}</Text>
+            <Text style={typography.description}>{profile.email}</Text>
+            <Text style={typography.description}>
+              {new Date(profile.created_at).toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+              })}</Text>
+          </Container>
+          <Container>
+            <Text style={styles.sectionTitle}>Change Password</Text>
+            <Input
+              label="Current password"
+              placeholder="Enter current password"
+              value={currentPassword}
+              onChangeText={setCurrentPassword}
+              secureTextEntry
+              autoComplete="password"
+              textContentType="password"
+              style={styles.input}
+            />
+            <Input
+              label="New password"
+              placeholder="Enter new password"
+              value={newPassword}
+              onChangeText={setNewPassword}
+              secureTextEntry
+              autoComplete="password-new"
+              textContentType="newPassword"
+              style={styles.input}
+            />
+            <Input
+              label="Confirm new password"
+              placeholder="Confirm new password"
+              value={confirmPassword}
+              onChangeText={setConfirmPassword}
+              secureTextEntry
+              autoComplete="password-new"
+              textContentType="newPassword"
+              style={styles.input}
+              error={confirmPassword && newPassword !== confirmPassword && 'Passwords do not match'}
+            />
+            <Button
+              title="Update password"
+              loading={isSubmitting}
+              onPress={handleChangePassword}
+              disabled={isSubmitting || (!confirmPassword && !currentPassword) || newPassword !== confirmPassword}
+              style={styles.updateButton}
+            />
+          </Container>
+        </View>
 
-      <Container>
-        <Button
-          variant="outlined"
-          title="Logout"
-          onPress={logout}
-        />
-      </Container>
+        <Container>
+          <Button
+            variant="outlined"
+            title="Logout"
+            onPress={logout}
+          />
+        </Container>
+      </ScrollView>
     </SafeAreaView>
   )
 }
@@ -99,6 +101,10 @@ export default function Settings({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  scrollContent: {
+    flexGrow: 1,
+    gap: margins.md,
     justifyContent: 'space-between',
   },
   settingsContainer: {

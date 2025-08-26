@@ -100,16 +100,15 @@ const styles = StyleSheet.create({
     gap: margins.sm,
   },
   filter: {
-    ...typography.label,
+    ...typography.button,
     backgroundColor: colors.lightGray2,
     paddingHorizontal: margins.sm,
     paddingVertical: margins.xxs,
-    borderRadius: margins.sm,
+    borderRadius: margins.md,
   },
   selectedFilter: {
     backgroundColor: colors.primary,
     color: colors.white,
-    ...typography.labelBold,
   },
   bottomButtonContainer: {
     paddingHorizontal: margins.md,
