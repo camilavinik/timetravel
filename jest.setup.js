@@ -154,12 +154,23 @@ jest.mock('./lib/theme', () => {
 });
 
 // Mock AuthContext
+const mockLogout = jest.fn();
+const mockChangePassword = jest.fn(() => Promise.resolve({ error: null }));
+
 jest.mock('./lib/AuthContext', () => ({
   useAuthContext: () => ({
     register: jest.fn(),
     login: jest.fn(),
     loading: false,
     session: { user: { id: 'test-user-id' } },
+    profile: {
+      first_name: 'John',
+      last_name: 'Doe',
+      email: 'john.doe@example.com',
+      created_at: '2025-08-22T00:00:00Z'
+    },
+    logout: mockLogout,
+    changePassword: mockChangePassword,
   }),
 }));
 
@@ -189,3 +200,6 @@ global.mockGetCapsuleContent = mockGetCapsuleContent;
 
 global.mockGoBack = mockGoBack;
 global.mockNavigate = mockNavigate;
+
+global.mockLogout = mockLogout;
+global.mockChangePassword = mockChangePassword;
