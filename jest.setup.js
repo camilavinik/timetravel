@@ -3,6 +3,34 @@
  * Contains all mocks used across test files
  */
 
+// Workaround for act() warnings
+// from: https://github.com/testing-library/react-testing-library/issues/459
+const consoleError = console.error;
+let mockConsoleError;
+beforeAll(() => {
+  mockConsoleError = jest.spyOn(console, 'error').mockImplementation((...args) => {
+    const message = typeof args[0] === 'string' ? args[0] : '';
+    if (
+      message.includes('When testing, code that causes React state updates should be wrapped into act(...)') ||
+      message.includes('antd')
+    ) {
+      return;
+    }
+
+    return consoleError.call(console, args);
+  });
+});
+
+afterAll(() => {
+  mockConsoleError.mockRestore();
+});
+
+// Mock Platform
+global.Platform = {
+  OS: 'ios',
+  select: (obj) => obj.ios || obj.default,
+};
+
 // Mock navigation
 const mockGoBack = jest.fn();
 const mockNavigate = jest.fn();
@@ -17,6 +45,15 @@ jest.mock('@react-navigation/native', () => ({
 jest.mock('@react-native-async-storage/async-storage', () =>
   require('@react-native-async-storage/async-storage/jest/async-storage-mock')
 );
+
+// Mock useFocusEffect
+jest.mock('@react-navigation/native', () => ({
+  useNavigation: () => ({
+    goBack: mockGoBack,
+    navigate: mockNavigate,
+  }),
+  useFocusEffect: jest.fn((callback) => callback()),
+}));
 
 // Mock Supabase client
 jest.mock('./lib/supabase', () => ({
@@ -42,7 +79,7 @@ jest.mock('./lib/supabase', () => ({
 // Mock theme
 jest.mock('./lib/theme', () => {
   const rsz = (fontSize, font = false) => fontSize;
-  
+
   const colors = {
     primary: '#D97706',
     secondary: '#37474F',
@@ -122,9 +159,33 @@ jest.mock('./lib/AuthContext', () => ({
     register: jest.fn(),
     login: jest.fn(),
     loading: false,
+    session: { user: { id: 'test-user-id' } },
+  }),
+}));
+
+// Mock useCapsules hook
+const mockGetCapsules = jest.fn(() => Promise.resolve([]));
+const mockCreateCapsule = jest.fn();
+const mockGetCapsuleContent = jest.fn();
+
+jest.mock('./lib/useCapsules', () => ({
+  __esModule: true,
+  default: () => ({
+    getCapsules: mockGetCapsules,
+    getCapsulesLoading: false,
+    getCapsulesError: null,
+    createCapsule: mockCreateCapsule,
+    isCreatingCapsule: false,
+    getCapsuleContent: mockGetCapsuleContent,
+    getCapsuleContentLoading: false,
+    getCapsuleContentError: null,
   }),
 }));
 
 // Export mock functions
+global.mockGetCapsules = mockGetCapsules;
+global.mockCreateCapsule = mockCreateCapsule;
+global.mockGetCapsuleContent = mockGetCapsuleContent;
+
 global.mockGoBack = mockGoBack;
 global.mockNavigate = mockNavigate;
