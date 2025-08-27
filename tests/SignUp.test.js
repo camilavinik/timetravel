@@ -17,18 +17,18 @@ describe('<SignUp />', () => {
 
   test('it renders SignUp screen correctly', () => {
     const { getByText, getByPlaceholderText } = renderedScreen;
-    
+
     // Check if main elements are rendered
     expect(getByText('Sign up for Timetravel')).toBeTruthy();
     expect(getByText('Create an account to start your journey')).toBeTruthy();
-    
+
     // Check if form inputs are rendered
     expect(getByPlaceholderText('Name')).toBeTruthy();
     expect(getByPlaceholderText('Last Name')).toBeTruthy();
     expect(getByPlaceholderText('email@address.com')).toBeTruthy();
     expect(getByPlaceholderText('Password')).toBeTruthy();
     expect(getByPlaceholderText('Confirm Password')).toBeTruthy();
-    
+
     // Check if buttons are rendered
     const registerButton = getByText('Register');
     const cancelButton = getByText('Cancel');

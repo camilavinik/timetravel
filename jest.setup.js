@@ -5,9 +5,11 @@
 
 // Mock navigation
 const mockGoBack = jest.fn();
+const mockNavigate = jest.fn();
 jest.mock('@react-navigation/native', () => ({
   useNavigation: () => ({
     goBack: mockGoBack,
+    navigate: mockNavigate,
   }),
 }));
 
@@ -114,5 +116,15 @@ jest.mock('./lib/theme', () => {
   return { colors, typography, margins, rsz };
 });
 
+// Mock AuthContext
+jest.mock('./lib/AuthContext', () => ({
+  useAuthContext: () => ({
+    register: jest.fn(),
+    login: jest.fn(),
+    loading: false,
+  }),
+}));
+
 // Export mock functions
 global.mockGoBack = mockGoBack;
+global.mockNavigate = mockNavigate;
