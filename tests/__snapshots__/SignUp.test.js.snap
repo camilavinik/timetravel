@@ -1,0 +1,429 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<SignUp /> it should match snapshot 1`] = `
+<RCTSafeAreaView
+  style={
+    [
+      undefined,
+      {
+        "flex": 1,
+      },
+    ]
+  }
+>
+  <View
+    style={
+      [
+        {
+          "alignItems": "center",
+          "justifyContent": "center",
+          "paddingHorizontal": 18,
+        },
+        {
+          "flex": 1,
+        },
+      ]
+    }
+  >
+    <View
+      style={
+        [
+          {
+            "backgroundColor": "#FFFFFF",
+            "borderRadius": 10,
+            "padding": 18,
+            "width": "100%",
+          },
+          {
+            "backgroundColor": "#FFFFFF",
+          },
+        ]
+      }
+    >
+      <View
+        style={
+          {
+            "alignItems": "center",
+            "marginBottom": 32,
+          }
+        }
+      >
+        <Image
+          source={
+            {
+              "testUri": "../../../assets/icon.png",
+            }
+          }
+          style={
+            {
+              "height": 80,
+              "marginBottom": 18,
+              "width": 80,
+            }
+          }
+        />
+        <Text
+          style={
+            {
+              "color": "#263238",
+              "fontFamily": "SpaceGrotesk_700Bold",
+              "fontSize": 24,
+              "marginBottom": 4,
+            }
+          }
+        >
+          Sign up for Timetravel
+        </Text>
+        <Text
+          style={
+            {
+              "color": "#78909C",
+              "fontFamily": "SpaceGrotesk_400Regular",
+              "fontSize": 16,
+            }
+          }
+        >
+          Create an account to start your journey
+        </Text>
+      </View>
+      <View
+        style={
+          {
+            "gap": 18,
+          }
+        }
+      >
+        <View
+          style={
+            {
+              "flexDirection": "row",
+              "gap": 18,
+            }
+          }
+        >
+          <View
+            style={
+              {
+                "flex": 1,
+              }
+            }
+          >
+            <Text
+              style={
+                {
+                  "color": "#263238",
+                  "fontFamily": "SpaceGrotesk_500Medium",
+                  "fontSize": 14,
+                  "marginBottom": 4,
+                }
+              }
+            >
+              Name
+            </Text>
+            <TextInput
+              autoCapitalize="none"
+              multiline={false}
+              onChangeText={[Function]}
+              placeholder="Name"
+              placeholderTextColor="#78909C"
+              secureTextEntry={false}
+              style={
+                [
+                  {
+                    "borderColor": "#78909C",
+                    "borderRadius": 4,
+                    "borderWidth": 1,
+                    "color": "#263238",
+                    "fontFamily": "SpaceGrotesk_400Regular",
+                    "fontSize": 16,
+                    "padding": 10,
+                  },
+                  undefined,
+                  undefined,
+                  false,
+                ]
+              }
+              value=""
+            />
+          </View>
+          <View
+            style={
+              {
+                "flex": 1,
+              }
+            }
+          >
+            <Text
+              style={
+                {
+                  "color": "#263238",
+                  "fontFamily": "SpaceGrotesk_500Medium",
+                  "fontSize": 14,
+                  "marginBottom": 4,
+                }
+              }
+            >
+              Last Name
+            </Text>
+            <TextInput
+              autoCapitalize="none"
+              multiline={false}
+              onChangeText={[Function]}
+              placeholder="Last Name"
+              placeholderTextColor="#78909C"
+              secureTextEntry={false}
+              style={
+                [
+                  {
+                    "borderColor": "#78909C",
+                    "borderRadius": 4,
+                    "borderWidth": 1,
+                    "color": "#263238",
+                    "fontFamily": "SpaceGrotesk_400Regular",
+                    "fontSize": 16,
+                    "padding": 10,
+                  },
+                  undefined,
+                  undefined,
+                  false,
+                ]
+              }
+              value=""
+            />
+          </View>
+        </View>
+        <View>
+          <Text
+            style={
+              {
+                "color": "#263238",
+                "fontFamily": "SpaceGrotesk_500Medium",
+                "fontSize": 14,
+                "marginBottom": 4,
+              }
+            }
+          >
+            Email
+          </Text>
+          <TextInput
+            autoCapitalize="none"
+            multiline={false}
+            onChangeText={[Function]}
+            placeholder="email@address.com"
+            placeholderTextColor="#78909C"
+            secureTextEntry={false}
+            style={
+              [
+                {
+                  "borderColor": "#78909C",
+                  "borderRadius": 4,
+                  "borderWidth": 1,
+                  "color": "#263238",
+                  "fontFamily": "SpaceGrotesk_400Regular",
+                  "fontSize": 16,
+                  "padding": 10,
+                },
+                undefined,
+                undefined,
+                false,
+              ]
+            }
+            value=""
+          />
+        </View>
+        <View>
+          <Text
+            style={
+              {
+                "color": "#263238",
+                "fontFamily": "SpaceGrotesk_500Medium",
+                "fontSize": 14,
+                "marginBottom": 4,
+              }
+            }
+          >
+            Password
+          </Text>
+          <TextInput
+            autoCapitalize="none"
+            multiline={false}
+            onChangeText={[Function]}
+            placeholder="Password"
+            placeholderTextColor="#78909C"
+            secureTextEntry={true}
+            style={
+              [
+                {
+                  "borderColor": "#78909C",
+                  "borderRadius": 4,
+                  "borderWidth": 1,
+                  "color": "#263238",
+                  "fontFamily": "SpaceGrotesk_400Regular",
+                  "fontSize": 16,
+                  "padding": 10,
+                },
+                undefined,
+                undefined,
+                false,
+              ]
+            }
+            value=""
+          />
+        </View>
+        <View>
+          <Text
+            style={
+              {
+                "color": "#263238",
+                "fontFamily": "SpaceGrotesk_500Medium",
+                "fontSize": 14,
+                "marginBottom": 4,
+              }
+            }
+          >
+            Confirm Password
+          </Text>
+          <TextInput
+            autoCapitalize="none"
+            multiline={false}
+            onChangeText={[Function]}
+            placeholder="Confirm Password"
+            placeholderTextColor="#78909C"
+            secureTextEntry={true}
+            style={
+              [
+                {
+                  "borderColor": "#78909C",
+                  "borderRadius": 4,
+                  "borderWidth": 1,
+                  "color": "#263238",
+                  "fontFamily": "SpaceGrotesk_400Regular",
+                  "fontSize": 16,
+                  "padding": 10,
+                },
+                "",
+                undefined,
+                false,
+              ]
+            }
+            value=""
+          />
+        </View>
+        <View
+          style={
+            {
+              "gap": 10,
+              "marginTop": 10,
+            }
+          }
+        >
+          <View
+            accessibilityState={
+              {
+                "busy": undefined,
+                "checked": undefined,
+                "disabled": true,
+                "expanded": undefined,
+                "selected": undefined,
+              }
+            }
+            accessibilityValue={
+              {
+                "max": undefined,
+                "min": undefined,
+                "now": undefined,
+                "text": undefined,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            focusable={false}
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              {
+                "alignItems": "center",
+                "backgroundColor": "#D97706",
+                "borderColor": "#D97706",
+                "borderRadius": 4,
+                "borderWidth": 2,
+                "opacity": 0.4,
+                "padding": 10,
+              }
+            }
+          >
+            <Text
+              style={
+                {
+                  "color": "#FFFFFF",
+                  "fontFamily": "SpaceGrotesk_600SemiBold",
+                  "fontSize": 16,
+                  "textAlign": "center",
+                }
+              }
+            >
+              Register
+            </Text>
+          </View>
+          <View
+            accessibilityState={
+              {
+                "busy": undefined,
+                "checked": undefined,
+                "disabled": undefined,
+                "expanded": undefined,
+                "selected": undefined,
+              }
+            }
+            accessibilityValue={
+              {
+                "max": undefined,
+                "min": undefined,
+                "now": undefined,
+                "text": undefined,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              {
+                "alignItems": "center",
+                "backgroundColor": "transparent",
+                "borderWidth": 0,
+                "opacity": 1,
+                "padding": 10,
+              }
+            }
+          >
+            <Text
+              style={
+                {
+                  "color": "#D97706",
+                  "fontFamily": "SpaceGrotesk_600SemiBold",
+                  "fontSize": 16,
+                  "textAlign": "center",
+                }
+              }
+            >
+              Cancel
+            </Text>
+          </View>
+        </View>
+      </View>
+    </View>
+  </View>
+</RCTSafeAreaView>
+`;
