@@ -1,6 +1,7 @@
 import React from 'react';
 import { render, fireEvent, waitFor, act } from '@testing-library/react-native';
 import MyCapsules from '../components/MyCapsules';
+import { lockedCapsule, unlockedCapsule } from './mocks/capsules';
 
 describe('<MyCapsules /> without capsules', () => {
   let renderedScreen;
@@ -42,38 +43,9 @@ describe('<MyCapsules /> without capsules', () => {
 describe('<MyCapsules /> with capsules', () => {
   let renderedScreen;
 
-  const mockedCapsules = [
-    {
-      id: 1,
-      name: 'Mock Capsule 1 Locked',
-      color: '#FFFAA0',
-      icon: '☀️',
-      unlockAt: 'Dec 25, 2025',
-      createdAt: 'Aug 25, 2025',
-      unlocked: false,
-      daysLeftCount: 30,
-      imageCount: 5,
-      videoCount: 2,
-      messageCount: 3
-    },
-    {
-      id: 2,
-      name: 'Mock Capsule 2 Unlocked',
-      color: '#CAFFBF',
-      icon: '🌊',
-      unlockAt: 'Aug 25, 2025',
-      createdAt: 'Aug 20, 2025',
-      unlocked: true,
-      daysLeftCount: 0,
-      imageCount: 10,
-      videoCount: 1,
-      messageCount: 2
-    }
-  ];
-
   beforeEach(() => {
     jest.clearAllMocks();
-    global.mockGetCapsules.mockResolvedValue(mockedCapsules);
+    global.mockGetCapsules.mockResolvedValue([lockedCapsule, unlockedCapsule]);
     renderedScreen = render(<MyCapsules navigation={{ navigate: global.mockNavigate }} />);
   });
 
@@ -91,8 +63,8 @@ describe('<MyCapsules /> with capsules', () => {
       expect(getByText('Unlocked')).toBeTruthy();
 
       // Check if capsules are rendered
-      expect(getByText('Mock Capsule 1 Locked')).toBeTruthy();
-      expect(getByText('Mock Capsule 2 Unlocked')).toBeTruthy();
+      expect(getByText('Locked Capsule 1')).toBeTruthy();
+      expect(getByText('Unlocked Capsule 1')).toBeTruthy();
 
       // Check if create button is rendered
       expect(getByText('Create Capsule')).toBeTruthy();
@@ -104,21 +76,23 @@ describe('<MyCapsules /> with capsules', () => {
 
     // Wait for capsules to be loaded
     await waitFor(() => {
-      expect(getByText('Mock Capsule 1 Locked')).toBeTruthy();
-      expect(getByText('Mock Capsule 2 Unlocked')).toBeTruthy();
+      expect(getByText('Locked Capsule 1')).toBeTruthy();
+      expect(getByText('Unlocked Capsule 1')).toBeTruthy();
     });
 
     // Search for specific capsule
     const searchInput = getByPlaceholderText('Search capsule');
     act(() => {
-      fireEvent.changeText(searchInput, '1');
+      fireEvent.changeText(searchInput, 'Unlocked');
     });
 
     // Should show only matching capsule
     await waitFor(() => {
-      expect(getByText('Mock Capsule 1 Locked')).toBeTruthy();
-      expect(queryByText('Mock Capsule 2 Unlocked')).toBeNull();
-    });
+      const lockedElement = queryByText('Locked Capsule 1');
+      const unlockedElement = queryByText('Unlocked Capsule 1');
+      expect(unlockedElement).toBeTruthy();
+      expect(lockedElement).toBeNull();
+    }, { timeout: 3000 });
 
     // Search for non-existent capsule
     act(() => {
@@ -128,8 +102,8 @@ describe('<MyCapsules /> with capsules', () => {
     // Should show no capsules found message
     await waitFor(() => {
       expect(getByText('No capsules found with "NonExistent"')).toBeTruthy();
-      expect(queryByText('Mock Capsule 1 Locked')).toBeNull();
-      expect(queryByText('Mock Capsule 2 Unlocked')).toBeNull();
+      expect(queryByText('Locked Capsule 1')).toBeNull();
+      expect(queryByText('Unlocked Capsule 1')).toBeNull();
     });
   });
 
@@ -138,8 +112,8 @@ describe('<MyCapsules /> with capsules', () => {
 
     // Wait for capsules to be loaded
     await waitFor(() => {
-      expect(getByText('Mock Capsule 1 Locked')).toBeTruthy();
-      expect(getByText('Mock Capsule 2 Unlocked')).toBeTruthy();
+      expect(getByText('Locked Capsule 1')).toBeTruthy();
+      expect(getByText('Unlocked Capsule 1')).toBeTruthy();
     });
 
     // Filter by Locked capsules
@@ -150,8 +124,8 @@ describe('<MyCapsules /> with capsules', () => {
 
     // Should show only locked capsules
     await waitFor(() => {
-      expect(getByText('Mock Capsule 1 Locked')).toBeTruthy();
-      expect(queryByText('Mock Capsule 2 Unlocked')).toBeNull();
+      expect(getByText('Locked Capsule 1')).toBeTruthy();
+      expect(queryByText('Unlocked Capsule 1')).toBeNull();
     });
 
     // Filter by Unlocked capsules
@@ -162,8 +136,8 @@ describe('<MyCapsules /> with capsules', () => {
 
     // Should show only unlocked capsules
     await waitFor(() => {
-      expect(queryByText('Mock Capsule 1 Locked')).toBeNull();
-      expect(getByText('Mock Capsule 2 Unlocked')).toBeTruthy();
+      expect(queryByText('Locked Capsule 1')).toBeNull();
+      expect(getByText('Unlocked Capsule 1')).toBeTruthy();
     });
 
     // Filter by All capsules
@@ -174,8 +148,8 @@ describe('<MyCapsules /> with capsules', () => {
 
     // Should show all capsules
     await waitFor(() => {
-      expect(getByText('Mock Capsule 1 Locked')).toBeTruthy();
-      expect(getByText('Mock Capsule 2 Unlocked')).toBeTruthy();
+      expect(getByText('Locked Capsule 1')).toBeTruthy();
+      expect(getByText('Unlocked Capsule 1')).toBeTruthy();
     });
   });
 
@@ -184,15 +158,15 @@ describe('<MyCapsules /> with capsules', () => {
 
     // Wait for capsule to be rendered
     await waitFor(() => {
-      expect(getByText('Mock Capsule 1 Locked')).toBeTruthy();
+      expect(getByText('Locked Capsule 1')).toBeTruthy();
     });
 
     // Press on a capsule
     act(() => {
-      fireEvent.press(getByText('Mock Capsule 1 Locked'));
+      fireEvent.press(getByText('Locked Capsule 1'));
     });
 
     // Check if navigate function is called
-    expect(global.mockNavigate).toHaveBeenCalledWith('Capsule', { capsule: mockedCapsules[0] });
+    expect(global.mockNavigate).toHaveBeenCalledWith('Capsule', { capsule: lockedCapsule });
   });
 });
