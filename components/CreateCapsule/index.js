@@ -104,7 +104,7 @@ export default function CreateCapsule({ navigation }) {
             <ColorChooser color={color} setColor={setColor} />
             <View style={styles.gap10}>
               <Text style={typography.subtitle}>Capsule Name</Text>
-              <Input value={name} onChangeText={setName} />
+              <Input value={name} onChangeText={setName} testID="capsule-name-input" />
             </View>
           </View>
         </Container>
@@ -116,13 +116,13 @@ export default function CreateCapsule({ navigation }) {
               <Text style={typography.subtitle}>Your Messages</Text>
               <Text style={styles.description}>Add one or more messages.</Text>
             </View>
-            <Button title={<Ionicons name="add-outline" size={24} />} onPress={addMessage} size="small" />
+            <Button title={<Ionicons name="add-outline" size={24} />} onPress={addMessage} size="small" testID="add-message-button" />
           </View>
           {messages.length > 0 && <View style={styles.column}>
             {messages.map((message, index) => (
               <View key={message.id} style={styles.relative}>
-                <Input label={`Message ${index + 1}`} placeholder="Write your message here..." multiline value={message.message} onChangeText={text => updateMessage(message.id, text)} />
-                <TouchableOpacity onPress={() => deleteMessage(message.id)} style={styles.messageDeleteIcon}>
+                <Input label={`Message ${index + 1}`} placeholder="Write your message here..." multiline value={message.message} onChangeText={text => updateMessage(message.id, text)} testID={`message-input-${index + 1}`} />
+                <TouchableOpacity onPress={() => deleteMessage(message.id)} style={styles.messageDeleteIcon} testID={`delete-message-${index + 1}`}>
                   <Ionicons name="close-circle-outline" size={20} color={colors.gray} />
                 </TouchableOpacity>
               </View>
@@ -137,7 +137,7 @@ export default function CreateCapsule({ navigation }) {
               <Text style={typography.subtitle}>Add Media</Text>
               <Text style={styles.description}>Upload photos, videos, or both.</Text>
             </View>
-            <Button title={<Ionicons name="add-outline" size={24} />} onPress={addMedia} size="small" />
+            <Button title={<Ionicons name="add-outline" size={24} />} onPress={addMedia} size="small" testID="add-media-button" />
           </View>
 
           {mediaItems.length > 0 && (
@@ -214,6 +214,7 @@ export default function CreateCapsule({ navigation }) {
             }
             onPress={handleCreateCapsule}
             disabled={isCreatingCapsule || name.trim() === '' || icon === '' || color === '' || (mediaItems.length === 0 && messages.length === 0)}
+            testID="create-capsule-button"
           />
         </Container>
       </View>

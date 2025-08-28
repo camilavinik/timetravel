@@ -54,9 +54,9 @@ const textVariants = {
   ghost: styles.textOutlined,
 }
 
-export default function Button({ title, onPress, loading, disabled, variant = 'contained', size = 'medium', style }) {
+export default function Button({ title, onPress, loading, disabled, variant = 'contained', size = 'medium', style, testID }) {
   return (
-    <TouchableOpacity style={[buttonVariants[variant], disabled && styles.disabled, size === 'small' && styles.small, style]} onPress={onPress} disabled={disabled || loading}>
+    <TouchableOpacity style={[buttonVariants[variant], disabled && styles.disabled, size === 'small' && styles.small, style]} onPress={onPress} disabled={disabled || loading} testID={testID}>
       <Text style={textVariants[variant]}>{title}</Text>
     </TouchableOpacity>
   )

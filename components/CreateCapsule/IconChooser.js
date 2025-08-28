@@ -34,7 +34,7 @@ export default function IconChooser({ icon, setIcon }) {
       <Text style={typography.subtitle}>Choose Icon</Text>
       <View style={styles.iconsContainer}>
         {suggestedIcons.map((i, index) => (
-          <TouchableOpacity style={[styles.icon, i === icon && styles.selectedIcon]} key={index} onPress={() => handleSelectIcon(i)}>
+          <TouchableOpacity style={[styles.icon, i === icon && styles.selectedIcon]} key={index} onPress={() => handleSelectIcon(i)} testID={`icon-option-${i}`}>
             <Text style={typography.subtitle}>{i}</Text>
           </TouchableOpacity>
         ))}
@@ -45,6 +45,7 @@ export default function IconChooser({ icon, setIcon }) {
         onChangeText={handleInputChange}
         maxLength={1}
         inputStyle={styles.centeredInput}
+        testID="custom-icon-input"
       />
     </View>
   )

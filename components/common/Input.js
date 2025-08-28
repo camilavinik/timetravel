@@ -14,6 +14,7 @@ export default function Input({
   inputStyle,
   error,
   multiline = false,
+  testID,
 }) {
   return (
     <View style={style}>
@@ -30,6 +31,7 @@ export default function Input({
         textContentType={textContentType}
         maxLength={maxLength}
         multiline={multiline}
+        testID={testID}
       />
       {error && <Text style={styles.error}>{error}</Text>}
     </View>

@@ -3,6 +3,16 @@
  * Contains all mocks used across test files
  */
 
+// Mock libraries
+jest.mock('expo-crypto', () => ({ randomUUID: jest.fn(() => 'mock-uuid-123') }));
+jest.mock('expo-image-picker', () => ({ requestMediaLibraryPermissionsAsync: jest.fn(), launchImageLibraryAsync: jest.fn() }));
+jest.mock('expo-file-system', () => ({ getInfoAsync: jest.fn() }));
+jest.mock('expo-video-thumbnails', () => ({ getThumbnailAsync: jest.fn() }));
+jest.mock('@react-native-community/datetimepicker', () => ({ value, onChange, ...props }) => {
+  const MockedDateTimePicker = require('react-native').View;
+  return <MockedDateTimePicker testID="date-time-picker" />;
+});
+
 // Workaround for act() warnings
 // from: https://github.com/testing-library/react-testing-library/issues/459
 const consoleError = console.error;
@@ -176,7 +186,7 @@ jest.mock('./lib/AuthContext', () => ({
 
 // Mock useCapsules hook
 const mockGetCapsules = jest.fn(() => Promise.resolve([]));
-const mockCreateCapsule = jest.fn();
+const mockCreateCapsule = jest.fn(() => Promise.resolve());
 const mockGetCapsuleContent = jest.fn();
 
 jest.mock('./lib/useCapsules', () => ({
