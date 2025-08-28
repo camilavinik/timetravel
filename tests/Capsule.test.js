@@ -75,8 +75,7 @@ describe('<Capsule />', () => {
         expect(getByText('Media Galery')).toBeTruthy();
         // Video
         expect(getByText('Video')).toBeTruthy();
-        expect(getByText('5 MB')).toBeTruthy();
-        expect(getByText('00:30')).toBeTruthy();
+        expect(getByText('5 MB • 00:30')).toBeTruthy();
         // Image
         expect(getByText('Image')).toBeTruthy();
         expect(getByText('2 MB')).toBeTruthy();
