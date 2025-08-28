@@ -54,6 +54,7 @@ export default function Settings({ navigation }) {
               autoComplete="password"
               textContentType="password"
               style={styles.input}
+              testID="current-password-input"
             />
             <Input
               label="New password"
@@ -64,6 +65,7 @@ export default function Settings({ navigation }) {
               autoComplete="password-new"
               textContentType="newPassword"
               style={styles.input}
+              testID="new-password-input"
             />
             <Input
               label="Confirm new password"
@@ -75,6 +77,7 @@ export default function Settings({ navigation }) {
               textContentType="newPassword"
               style={styles.input}
               error={confirmPassword && newPassword !== confirmPassword && 'Passwords do not match'}
+              testID="confirm-new-password-input"
             />
             <Button
               title="Update password"
@@ -82,6 +85,7 @@ export default function Settings({ navigation }) {
               onPress={handleChangePassword}
               disabled={isSubmitting || (!confirmPassword && !currentPassword) || newPassword !== confirmPassword}
               style={styles.updateButton}
+              testID="update-password-button"
             />
           </Container>
         </View>
@@ -91,6 +95,7 @@ export default function Settings({ navigation }) {
             variant="outlined"
             title="Logout"
             onPress={logout}
+            testID="logout-button"
           />
         </Container>
       </ScrollView>

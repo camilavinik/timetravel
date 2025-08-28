@@ -185,6 +185,7 @@ exports[`<Settings /> it should match snapshot 1`] = `
                       false,
                     ]
                   }
+                  testID="current-password-input"
                   textContentType="password"
                   value=""
                 />
@@ -232,6 +233,7 @@ exports[`<Settings /> it should match snapshot 1`] = `
                       false,
                     ]
                   }
+                  testID="new-password-input"
                   textContentType="newPassword"
                   value=""
                 />
@@ -279,6 +281,7 @@ exports[`<Settings /> it should match snapshot 1`] = `
                       false,
                     ]
                   }
+                  testID="confirm-new-password-input"
                   textContentType="newPassword"
                   value=""
                 />
@@ -323,6 +326,7 @@ exports[`<Settings /> it should match snapshot 1`] = `
                     "padding": 10,
                   }
                 }
+                testID="update-password-button"
               >
                 <Text
                   style={
@@ -415,6 +419,7 @@ exports[`<Settings /> it should match snapshot 1`] = `
                   "padding": 10,
                 }
               }
+              testID="logout-button"
             >
               <Text
                 style={

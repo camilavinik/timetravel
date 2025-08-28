@@ -1,4 +1,4 @@
-import { render, fireEvent, act } from '@testing-library/react-native';
+import { render, fireEvent } from '@testing-library/react-native';
 import CreateCapsule from '../components/CreateCapsule';
 import { suggestedIcons } from '../components/CreateCapsule/IconChooser';
 import { suggestedColors } from '../components/CreateCapsule/ColorChooser';
@@ -71,9 +71,7 @@ describe('<CreateCapsule />', () => {
 
     // Add a message
     const addMessageButton = getByTestId('add-message-button');
-    act(() => {
-      fireEvent.press(addMessageButton);
-    });
+    fireEvent.press(addMessageButton);
 
     // Should show message input
     expect(queryByText('Message 1')).toBeTruthy();
@@ -81,9 +79,7 @@ describe('<CreateCapsule />', () => {
 
     // Remove the message
     const deleteMessageButton = getByTestId('delete-message-1');
-    act(() => {
-      fireEvent.press(deleteMessageButton);
-    });
+    fireEvent.press(deleteMessageButton);
 
     // Should no longer show message input
     expect(queryByText('Message 1')).toBeNull();
@@ -113,18 +109,14 @@ describe('<CreateCapsule />', () => {
 
     // Add and write a message
     const addMessageButton = getByTestId('add-message-button');
-    act(() => {
-      fireEvent.press(addMessageButton);
-    });
+    fireEvent.press(addMessageButton);
     const messageInput = getByTestId('message-input-1');
     fireEvent.changeText(messageInput, 'Hello future me!');
 
     // Check create button is enabled
     const createButton = getByTestId('create-capsule-button');
     expect(createButton).toBeTruthy();
-    await act(async () => {
-      fireEvent.press(createButton);
-    });
+    fireEvent.press(createButton);
 
     // Verify createCapsule was called
     expect(global.mockCreateCapsule).toHaveBeenCalled();

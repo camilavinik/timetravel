@@ -1,5 +1,4 @@
-import React from 'react';
-import { render, fireEvent, waitFor, act } from '@testing-library/react-native';
+import { render, fireEvent, waitFor } from '@testing-library/react-native';
 import MyCapsules from '../components/MyCapsules';
 import { lockedCapsule, unlockedCapsule } from './mocks/capsules';
 
@@ -20,19 +19,19 @@ describe('<MyCapsules /> without capsules', () => {
   });
 
   test('it renders MyCapsules empty state screen correctly', async () => {
-    const { getByText } = renderedScreen;
+    const { getByText, getByTestId } = renderedScreen;
 
     // Check if empty state messages are rendered
     expect(getByText("You don't have any capsules!")).toBeTruthy();
     expect(getByText('Create a new capsule to get started.')).toBeTruthy();
 
     // Check if create button is rendered
-    expect(getByText('Create Capsule')).toBeTruthy();
+    expect(getByTestId('create-capsule-button')).toBeTruthy();
   });
 
   test('it navigates to CreateCapsule when Create Capsule button is pressed', () => {
-    const { getByText } = renderedScreen;
-    const createButton = getByText('Create Capsule');
+    const { getByTestId } = renderedScreen;
+    const createButton = getByTestId('create-capsule-button');
     fireEvent.press(createButton);
 
     // Check if navigate function is called
@@ -50,29 +49,29 @@ describe('<MyCapsules /> with capsules', () => {
   });
 
   test('it renders MyCapsules with capsules', async () => {
-    const { getByText, getByPlaceholderText } = renderedScreen;
+    const { getByText, getByTestId } = renderedScreen;
 
     // Wait for async operations to complete
     await waitFor(() => {
       // Check if search input is rendered
-      expect(getByPlaceholderText('Search capsule')).toBeTruthy();
+      expect(getByTestId('search-input')).toBeTruthy();
 
       // Check if filter buttons are rendered
-      expect(getByText('All')).toBeTruthy();
-      expect(getByText('Locked')).toBeTruthy();
-      expect(getByText('Unlocked')).toBeTruthy();
+      expect(getByTestId('filter-all')).toBeTruthy();
+      expect(getByTestId('filter-locked')).toBeTruthy();
+      expect(getByTestId('filter-unlocked')).toBeTruthy();
 
       // Check if capsules are rendered
       expect(getByText('Locked Capsule 1')).toBeTruthy();
       expect(getByText('Unlocked Capsule 1')).toBeTruthy();
 
       // Check if create button is rendered
-      expect(getByText('Create Capsule')).toBeTruthy();
+      expect(getByTestId('create-capsule-button')).toBeTruthy();
     });
   });
 
   test('it filters capsules by search query', async () => {
-    const { getByPlaceholderText, getByText, queryByText } = renderedScreen;
+    const { getByTestId, getByText, queryByText } = renderedScreen;
 
     // Wait for capsules to be loaded
     await waitFor(() => {
@@ -81,10 +80,8 @@ describe('<MyCapsules /> with capsules', () => {
     });
 
     // Search for specific capsule
-    const searchInput = getByPlaceholderText('Search capsule');
-    act(() => {
-      fireEvent.changeText(searchInput, 'Unlocked');
-    });
+    const searchInput = getByTestId('search-input');
+    fireEvent.changeText(searchInput, 'Unlocked');
 
     // Should show only matching capsule
     await waitFor(() => {
@@ -95,9 +92,7 @@ describe('<MyCapsules /> with capsules', () => {
     }, { timeout: 3000 });
 
     // Search for non-existent capsule
-    act(() => {
-      fireEvent.changeText(searchInput, 'NonExistent');
-    });
+    fireEvent.changeText(searchInput, 'NonExistent');
 
     // Should show no capsules found message
     await waitFor(() => {
@@ -108,7 +103,7 @@ describe('<MyCapsules /> with capsules', () => {
   });
 
   test('it filters capsules by status', async () => {
-    const { getByText, queryByText } = renderedScreen;
+    const { getByText, queryByText, getByTestId } = renderedScreen;
 
     // Wait for capsules to be loaded
     await waitFor(() => {
@@ -117,10 +112,8 @@ describe('<MyCapsules /> with capsules', () => {
     });
 
     // Filter by Locked capsules
-    const lockedFilter = getByText('Locked');
-    act(() => {
-      fireEvent.press(lockedFilter);
-    });
+    const lockedFilter = getByTestId('filter-locked');
+    fireEvent.press(lockedFilter);
 
     // Should show only locked capsules
     await waitFor(() => {
@@ -129,10 +122,8 @@ describe('<MyCapsules /> with capsules', () => {
     });
 
     // Filter by Unlocked capsules
-    const unlockedFilter = getByText('Unlocked');
-    act(() => {
-      fireEvent.press(unlockedFilter);
-    });
+    const unlockedFilter = getByTestId('filter-unlocked');
+    fireEvent.press(unlockedFilter);
 
     // Should show only unlocked capsules
     await waitFor(() => {
@@ -141,10 +132,8 @@ describe('<MyCapsules /> with capsules', () => {
     });
 
     // Filter by All capsules
-    const allFilter = getByText('All');
-    act(() => {
-      fireEvent.press(allFilter);
-    });
+    const allFilter = getByTestId('filter-all');
+    fireEvent.press(allFilter);
 
     // Should show all capsules
     await waitFor(() => {
@@ -162,9 +151,7 @@ describe('<MyCapsules /> with capsules', () => {
     });
 
     // Press on a capsule
-    act(() => {
-      fireEvent.press(getByText('Locked Capsule 1'));
-    });
+    fireEvent.press(getByText('Locked Capsule 1'));
 
     // Check if navigate function is called
     expect(global.mockNavigate).toHaveBeenCalledWith('Capsule', { capsule: lockedCapsule });

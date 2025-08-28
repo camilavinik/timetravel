@@ -16,26 +16,24 @@ describe('<LogIn />', () => {
   });
 
   test('it renders LogIn screen correctly', () => {
-    const { getByText, getByPlaceholderText } = renderedScreen;
+    const { getByText, getByTestId } = renderedScreen;
 
     // Check if main elements are rendered
     expect(getByText('Welcome to Timetravel')).toBeTruthy();
     expect(getByText('Sign in to continue your journey')).toBeTruthy();
 
     // Check if form inputs are rendered
-    expect(getByPlaceholderText('email@address.com')).toBeTruthy();
-    expect(getByPlaceholderText('Password')).toBeTruthy();
+    expect(getByTestId('email-input')).toBeTruthy();
+    expect(getByTestId('password-input')).toBeTruthy();
 
     // Check if buttons are rendered
-    const signInButton = getByText('Sign in');
-    const signUpButton = getByText('Sign up');
-    expect(signInButton).toBeTruthy();
-    expect(signUpButton).toBeTruthy();
+    expect(getByTestId('sign-in-button')).toBeTruthy();
+    expect(getByTestId('sign-up-button')).toBeTruthy();
   });
 
   test('it navigates to SignUp when Sign up button is pressed', () => {
-    const { getByText } = renderedScreen;
-    const signUpButton = getByText('Sign up');
+    const { getByTestId } = renderedScreen;
+    const signUpButton = getByTestId('sign-up-button');
     fireEvent.press(signUpButton);
 
     // Check if navigate function is called

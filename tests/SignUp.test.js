@@ -16,29 +16,27 @@ describe('<SignUp />', () => {
   });
 
   test('it renders SignUp screen correctly', () => {
-    const { getByText, getByPlaceholderText } = renderedScreen;
+    const { getByText, getByTestId } = renderedScreen;
 
     // Check if main elements are rendered
     expect(getByText('Sign up for Timetravel')).toBeTruthy();
     expect(getByText('Create an account to start your journey')).toBeTruthy();
 
     // Check if form inputs are rendered
-    expect(getByPlaceholderText('Name')).toBeTruthy();
-    expect(getByPlaceholderText('Last Name')).toBeTruthy();
-    expect(getByPlaceholderText('email@address.com')).toBeTruthy();
-    expect(getByPlaceholderText('Password')).toBeTruthy();
-    expect(getByPlaceholderText('Confirm Password')).toBeTruthy();
+    expect(getByTestId('name-input')).toBeTruthy();
+    expect(getByTestId('last-name-input')).toBeTruthy();
+    expect(getByTestId('email-input')).toBeTruthy();
+    expect(getByTestId('password-input')).toBeTruthy();
+    expect(getByTestId('confirm-password-input')).toBeTruthy();
 
     // Check if buttons are rendered
-    const registerButton = getByText('Register');
-    const cancelButton = getByText('Cancel');
-    expect(registerButton).toBeTruthy();
-    expect(cancelButton).toBeTruthy();
+    expect(getByTestId('register-button')).toBeTruthy();
+    expect(getByTestId('cancel-button')).toBeTruthy();
   });
 
   test('it goes back when Cancel button is pressed', () => {
-    const { getByText } = renderedScreen;
-    const cancelButton = getByText('Cancel');
+    const { getByTestId } = renderedScreen;
+    const cancelButton = getByTestId('cancel-button');
     fireEvent.press(cancelButton);
 
     // Check if goBack function is called
@@ -46,9 +44,9 @@ describe('<SignUp />', () => {
   });
 
   test('it shows error message when passwords do not match', () => {
-    const { getByPlaceholderText, getByText } = renderedScreen;
-    const passwordInput = getByPlaceholderText('Password');
-    const confirmPasswordInput = getByPlaceholderText('Confirm Password');
+    const { getByTestId, getByText } = renderedScreen;
+    const passwordInput = getByTestId('password-input');
+    const confirmPasswordInput = getByTestId('confirm-password-input');
     fireEvent.changeText(passwordInput, 'a');
     fireEvent.changeText(confirmPasswordInput, 'b');
 

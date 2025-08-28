@@ -34,6 +34,7 @@ export default function SignUp() {
             value={name}
             placeholder="Name"
             style={styles.flex1}
+            testID="name-input"
           />
           <Input
             label="Last Name"
@@ -42,6 +43,7 @@ export default function SignUp() {
             value={lastName}
             placeholder="Last Name"
             style={styles.flex1}
+            testID="last-name-input"
           />
         </View>
         <Input
@@ -51,6 +53,7 @@ export default function SignUp() {
           value={email}
           placeholder="email@address.com"
           autoCapitalize="none"
+          testID="email-input"
         />
         <Input
           label="Password"
@@ -60,6 +63,7 @@ export default function SignUp() {
           secureTextEntry={true}
           placeholder="Password"
           autoCapitalize={'none'}
+          testID="password-input"
         />
         <Input
           label="Confirm Password"
@@ -70,10 +74,11 @@ export default function SignUp() {
           placeholder="Confirm Password"
           autoCapitalize={'none'}
           error={confirmPassword && password !== confirmPassword ? 'Passwords do not match' : ''}
+          testID="confirm-password-input"
         />
         <View style={styles.buttonGroup}>
-          <Button title="Register" disabled={disabled} onPress={handleRegister} />
-          <Button variant="ghost" title="Cancel" disabled={loading} onPress={() => navigation.goBack()} />
+          <Button title="Register" disabled={disabled} onPress={handleRegister} testID="register-button" />
+          <Button variant="ghost" title="Cancel" disabled={loading} onPress={() => navigation.goBack()} testID="cancel-button" />
         </View>
       </View>
     </Container>

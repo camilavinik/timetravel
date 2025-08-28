@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, fireEvent, waitFor, act } from '@testing-library/react-native';
+import { render, fireEvent } from '@testing-library/react-native';
 import Settings from '../components/Settings';
 
 describe('<Settings />', () => {
@@ -16,7 +16,7 @@ describe('<Settings />', () => {
   });
 
   test('it renders Settings screen with profile information', () => {
-    const { getByText, getByPlaceholderText } = renderedScreen;
+    const { getByText, getByTestId } = renderedScreen;
 
     // Check if profile information is displayed
     expect(getByText('John Doe')).toBeTruthy();
@@ -25,27 +25,25 @@ describe('<Settings />', () => {
 
     // Check if change password section is rendered
     expect(getByText('Change Password')).toBeTruthy();
-    expect(getByPlaceholderText('Enter current password')).toBeTruthy();
-    expect(getByPlaceholderText('Enter new password')).toBeTruthy();
-    expect(getByPlaceholderText('Confirm new password')).toBeTruthy();
+    expect(getByTestId('current-password-input')).toBeTruthy();
+    expect(getByTestId('new-password-input')).toBeTruthy();
+    expect(getByTestId('confirm-new-password-input')).toBeTruthy();
 
     // Check if buttons are rendered
-    expect(getByText('Update password')).toBeTruthy();
-    expect(getByText('Logout')).toBeTruthy();
+    expect(getByTestId('update-password-button')).toBeTruthy();
+    expect(getByTestId('logout-button')).toBeTruthy();
   });
 
   test('it handles password input changes', () => {
-    const { getByPlaceholderText } = renderedScreen;
+    const { getByTestId } = renderedScreen;
 
-    const currentPasswordInput = getByPlaceholderText('Enter current password');
-    const newPasswordInput = getByPlaceholderText('Enter new password');
-    const confirmPasswordInput = getByPlaceholderText('Confirm new password');
+    const currentPasswordInput = getByTestId('current-password-input');
+    const newPasswordInput = getByTestId('new-password-input');
+    const confirmPasswordInput = getByTestId('confirm-new-password-input');
 
-    act(() => {
-      fireEvent.changeText(currentPasswordInput, 'password');
-      fireEvent.changeText(newPasswordInput, 'newpassword');
-      fireEvent.changeText(confirmPasswordInput, 'newpassword');
-    });
+    fireEvent.changeText(currentPasswordInput, 'password');
+    fireEvent.changeText(newPasswordInput, 'newpassword');
+    fireEvent.changeText(confirmPasswordInput, 'newpassword');
 
     expect(currentPasswordInput.props.value).toBe('password');
     expect(newPasswordInput.props.value).toBe('newpassword');
@@ -53,48 +51,40 @@ describe('<Settings />', () => {
   });
 
   test('it shows password error when passwords do not match', () => {
-    const { getByPlaceholderText, getByText } = renderedScreen;
+    const { getByTestId, getByText } = renderedScreen;
 
-    const newPasswordInput = getByPlaceholderText('Enter new password');
-    const confirmPasswordInput = getByPlaceholderText('Confirm new password');
+    const newPasswordInput = getByTestId('new-password-input');
+    const confirmPasswordInput = getByTestId('confirm-new-password-input');
 
-    act(() => {
-      fireEvent.changeText(newPasswordInput, 'a');
-      fireEvent.changeText(confirmPasswordInput, 'b');
-    });
+    fireEvent.changeText(newPasswordInput, 'a');
+    fireEvent.changeText(confirmPasswordInput, 'b');
 
     expect(getByText('Passwords do not match')).toBeTruthy();
   });
 
   test('it calls logout when logout button is pressed', () => {
-    const { getByText } = renderedScreen;
-    const logoutButton = getByText('Logout');
+    const { getByTestId } = renderedScreen;
+    const logoutButton = getByTestId('logout-button');
 
-    act(() => {
-      fireEvent.press(logoutButton);
-    });
+    fireEvent.press(logoutButton);
 
     expect(global.mockLogout).toHaveBeenCalled();
   });
 
   test('it calls changePassword when form is submitted', async () => {
-    const { getByPlaceholderText, getByText } = renderedScreen;
+    const { getByTestId } = renderedScreen;
 
-    const currentPasswordInput = getByPlaceholderText('Enter current password');
-    const newPasswordInput = getByPlaceholderText('Enter new password');
-    const confirmPasswordInput = getByPlaceholderText('Confirm new password');
-    const updateButton = getByText('Update password');
+    const currentPasswordInput = getByTestId('current-password-input');
+    const newPasswordInput = getByTestId('new-password-input');
+    const confirmPasswordInput = getByTestId('confirm-new-password-input');
+    const updateButton = getByTestId('update-password-button');
 
     // Fill the form
-    act(() => {
-      fireEvent.changeText(currentPasswordInput, 'password');
-      fireEvent.changeText(newPasswordInput, 'newpassword');
-      fireEvent.changeText(confirmPasswordInput, 'newpassword');
-    });
+    fireEvent.changeText(currentPasswordInput, 'password');
+    fireEvent.changeText(newPasswordInput, 'newpassword');
+    fireEvent.changeText(confirmPasswordInput, 'newpassword');
 
-    await act(async () => {
-      fireEvent.press(updateButton);
-    });
+    fireEvent.press(updateButton);
 
     expect(global.mockChangePassword).toHaveBeenCalledWith({
       currentPassword: 'password',
@@ -103,35 +93,29 @@ describe('<Settings />', () => {
   });
 
   test('it does not call changePassword when missing fields', async () => {
-    const { getByText } = renderedScreen;
+    const { getByTestId } = renderedScreen;
 
-    const updateButton = getByText('Update password');
+    const updateButton = getByTestId('update-password-button');
 
-    await act(async () => {
-      fireEvent.press(updateButton);
-    });
+    fireEvent.press(updateButton);
 
     expect(global.mockChangePassword).not.toHaveBeenCalled();
   });
 
   test('it does not call changePassword when passwords do not match', async () => {
-    const { getByPlaceholderText, getByText } = renderedScreen;
+    const { getByTestId } = renderedScreen;
 
-    const currentPasswordInput = getByPlaceholderText('Enter current password');
-    const newPasswordInput = getByPlaceholderText('Enter new password');
-    const confirmPasswordInput = getByPlaceholderText('Confirm new password');
-    const updateButton = getByText('Update password');
+    const currentPasswordInput = getByTestId('current-password-input');
+    const newPasswordInput = getByTestId('new-password-input');
+    const confirmPasswordInput = getByTestId('confirm-new-password-input');
+    const updateButton = getByTestId('update-password-button');
 
     // Fill form with different passwords
-    act(() => {
-      fireEvent.changeText(currentPasswordInput, 'password');
-      fireEvent.changeText(newPasswordInput, 'newpassword');
-      fireEvent.changeText(confirmPasswordInput, 'differentpassword');
-    });
+    fireEvent.changeText(currentPasswordInput, 'password');
+    fireEvent.changeText(newPasswordInput, 'newpassword');
+    fireEvent.changeText(confirmPasswordInput, 'differentpassword');
 
-    await act(async () => {
-      fireEvent.press(updateButton);
-    });
+    fireEvent.press(updateButton);
 
     expect(global.mockChangePassword).not.toHaveBeenCalled();
   });

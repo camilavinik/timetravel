@@ -143,6 +143,7 @@ exports[`<SignUp /> it should match snapshot 1`] = `
                   false,
                 ]
               }
+              testID="name-input"
               value=""
             />
           </View>
@@ -188,6 +189,7 @@ exports[`<SignUp /> it should match snapshot 1`] = `
                   false,
                 ]
               }
+              testID="last-name-input"
               value=""
             />
           </View>
@@ -228,6 +230,7 @@ exports[`<SignUp /> it should match snapshot 1`] = `
                 false,
               ]
             }
+            testID="email-input"
             value=""
           />
         </View>
@@ -267,6 +270,7 @@ exports[`<SignUp /> it should match snapshot 1`] = `
                 false,
               ]
             }
+            testID="password-input"
             value=""
           />
         </View>
@@ -306,6 +310,7 @@ exports[`<SignUp /> it should match snapshot 1`] = `
                 false,
               ]
             }
+            testID="confirm-password-input"
             value=""
           />
         </View>
@@ -356,6 +361,7 @@ exports[`<SignUp /> it should match snapshot 1`] = `
                 "padding": 10,
               }
             }
+            testID="register-button"
           >
             <Text
               style={
@@ -407,6 +413,7 @@ exports[`<SignUp /> it should match snapshot 1`] = `
                 "padding": 10,
               }
             }
+            testID="cancel-button"
           >
             <Text
               style={

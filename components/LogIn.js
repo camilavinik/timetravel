@@ -28,6 +28,7 @@ export default function LogIn() {
           value={email}
           placeholder="email@address.com"
           autoCapitalize={'none'}
+          testID="email-input"
         />
         <Input
           label="Password"
@@ -37,10 +38,11 @@ export default function LogIn() {
           secureTextEntry={true}
           placeholder="Password"
           autoCapitalize={'none'}
+          testID="password-input"
         />
         <View style={styles.buttonGroup}>
-          <Button title="Sign in" disabled={loading} onPress={handleLogin} />
-          <Button variant="outlined" title="Sign up" disabled={loading} onPress={() => navigation.navigate('SignUp')} />
+          <Button title="Sign in" disabled={loading} onPress={handleLogin} testID="sign-in-button" />
+          <Button variant="outlined" title="Sign up" disabled={loading} onPress={() => navigation.navigate('SignUp')} testID="sign-up-button" />
         </View>
       </View>
     </Container>

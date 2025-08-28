@@ -61,10 +61,10 @@ export default function MyCapsules({ navigation }) {
   return (
     <SafeAreaView style={styles.container}>
       <Container>
-        <Input placeholder="Search capsule" value={searchQuery} onChangeText={setSearchQuery} />
+        <Input placeholder="Search capsule" value={searchQuery} onChangeText={setSearchQuery} testID="search-input" />
         <View style={styles.filtersContainer}>
           {filters.map((filter) => (
-            <TouchableOpacity key={filter} onPress={() => setSelectedFilter(filter)}>
+            <TouchableOpacity key={filter} onPress={() => setSelectedFilter(filter)} testID={`filter-${filter.toLowerCase()}`}>
               <Text style={[styles.filter, selectedFilter === filter && styles.selectedFilter]}>{filter}</Text>
             </TouchableOpacity>
           ))}
@@ -80,7 +80,7 @@ export default function MyCapsules({ navigation }) {
           : <Text style={styles.noCapsulesFound}>No capsules found{searchQuery ? ` with "${searchQuery}"` : ''}</Text>}
       </ScrollView>
       <View style={styles.bottomButtonContainer}>
-        <Button title="Create Capsule" onPress={() => navigation.navigate('CreateCapsule')} />
+        <Button title="Create Capsule" onPress={() => navigation.navigate('CreateCapsule')} testID="create-capsule-button" />
       </View>
     </SafeAreaView>
   )

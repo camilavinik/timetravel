@@ -129,6 +129,7 @@ exports[`<LogIn /> it should match snapshot 1`] = `
                 false,
               ]
             }
+            testID="email-input"
             value=""
           />
         </View>
@@ -168,6 +169,7 @@ exports[`<LogIn /> it should match snapshot 1`] = `
                 false,
               ]
             }
+            testID="password-input"
             value=""
           />
         </View>
@@ -218,6 +220,7 @@ exports[`<LogIn /> it should match snapshot 1`] = `
                 "padding": 10,
               }
             }
+            testID="sign-in-button"
           >
             <Text
               style={
@@ -271,6 +274,7 @@ exports[`<LogIn /> it should match snapshot 1`] = `
                 "padding": 10,
               }
             }
+            testID="sign-up-button"
           >
             <Text
               style={

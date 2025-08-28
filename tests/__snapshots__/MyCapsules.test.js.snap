@@ -110,6 +110,7 @@ exports[`<MyCapsules /> without capsules it should match snapshot 1`] = `
               "width": "100%",
             }
           }
+          testID="create-capsule-button"
         >
           <Text
             style={
