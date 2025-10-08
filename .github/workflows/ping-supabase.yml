@@ -2,7 +2,7 @@ name: Ping Supabase to Prevent Pausing
 
 on:
   schedule:
-    - cron: '0 9 * * 1,4' # Runs at 9:00 AM UTC every Monday and Thursday
+    - cron: '0 9 * * *' # Runs every day at 9:00 AM UTC
   workflow_dispatch: # Allows manual triggering from the GitHub UI
 
 jobs:
@@ -19,13 +19,13 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18' # Use Node.js 18
+          node-version: '18'
 
       # Step 3: Install Supabase Client
       - name: Install Supabase Client
         run: npm install @supabase/supabase-js --force
 
-      # Step 4: Ping Supabase
+      # Step 4: Ping Supabase (insert + select)
       - name: Ping Supabase
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
@@ -34,28 +34,31 @@ jobs:
           node -e "
           (async () => {
             try {
-              // Debugging: Log environment variables (optional)
-              console.log('Supabase URL:', process.env.SUPABASE_URL);
-              console.log('Supabase Key:', process.env.SUPABASE_KEY);
-
-              // Import Supabase client
               const { createClient } = require('@supabase/supabase-js');
               const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
 
-              // Ping Supabase with ping_log table
-              const { data, error } = await supabase
+              // INSERT ping record
+              const { data: insertData, error: insertError } = await supabase
                 .from('ping_log')
                 .insert([{ pinged_at: new Date().toISOString() }])
                 .select();
 
-              // Handle errors
-              if (error) throw error;
+              if (insertError) throw insertError;
+              console.log('✅ Insert successful:', insertData);
 
-              // Log success
-              console.log('Ping successful:', data);
+              // SELECT recent pings to simulate read activity
+              const { data: selectData, error: selectError } = await supabase
+                .from('ping_log')
+                .select('*')
+                .order('pinged_at', { ascending: false })
+                .limit(5);
+
+              if (selectError) throw selectError;
+              console.log('📊 Select successful, recent entries:', selectData);
+
+              console.log('✅ Supabase ping completed successfully');
             } catch (err) {
-              // Log and exit with error
-              console.error('Error pinging Supabase:', err.message);
+              console.error('❌ Error pinging Supabase:', err.message);
               process.exit(1);
             }
           })();
